@@ -3,10 +3,10 @@ RULES
 
 to make an change in the repo
 1. create new branch with following name [dev-i]
-2. change i to issue number from github project
-3. make changes
-4. commit
-5. push
-6. request pull request
-7. wait for review
-8. after good review it will be merged to main branch
+   change i to issue number from github project
+2. make changes
+3. commit
+4. push
+5. request pull request
+6. wait for review
+7. after good review it will be merged to main branch
