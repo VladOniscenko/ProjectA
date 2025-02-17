@@ -28,7 +28,6 @@ obj/
 *.snupkg
 *.nuspec
 *.psmdcp
-*.sln
 
 # Ignore user-generated files
 *.userprefs
@@ -86,3 +85,10 @@ coverage/
 # Ignore global JetBrains Rider folders
 /.idea/
 /.idea_modules/
+
+# Explicitly ignore NuGet-generated files in obj directory
+obj/project.assets.json
+obj/project.nuget.cache
+obj/*.nuget.dgspec.json
+/obj
+*.sln
