@@ -28,7 +28,7 @@ public class Player
             CurrentHitPoints = MaximumHitPoints;
         }
     }
-
-
-
+        // Console.WriteLine("Please enter your name");
+        // string name = Console.ReadLine();
+        // Player player = new Player(name);
 }
