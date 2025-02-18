@@ -1,7 +1,13 @@
-﻿static class Program
+﻿using System;
+
+namespace KeyboardMenu
 {
-    static void Main()
+    class Program
     {
-        
+        static void Main(string[] args)
+        {
+            Game myGame = new Game();
+            myGame.Start();
+        }
     }
 }
