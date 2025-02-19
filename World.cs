@@ -206,4 +206,49 @@ public static class World
 
         return null;
     }
+    
+    // move this method to Location class if it is created
+    public static void DisplayMap(Location location)
+    {
+        
+        bool north = location.LocationToNorth ?? true;
+        bool east = location.LocationToEast ?? true;
+        bool south = location.LocationToSouth ?? true;
+        bool west = location.LocationToWest ?? true;
+        string locationName = location.Name ?? "Location name";
+        
+        Console.WriteLine("Where would you like to go?");
+        Console.WriteLine($"You are at: {locationName} From here you can go:");
+        
+        if (north)
+        {
+            Console.WriteLine("    N");
+            Console.WriteLine("    |");
+        }
+
+        if (west)
+        {
+            Console.Write("W---");
+            Console.Write("|");
+        }
+        else
+        {
+            Console.Write("    |");
+        }
+
+        if (east)
+        {
+            Console.WriteLine("---E");
+        }
+
+        if (south)
+        {
+            if (!east)
+            {
+                Console.Write("\n");
+            }
+            Console.WriteLine("    |");
+            Console.WriteLine("    S");
+        }
+    }
 }
