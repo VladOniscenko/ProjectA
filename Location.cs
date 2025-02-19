@@ -11,12 +11,12 @@ public class Location
         public Location? LocationToWest; 
 
 
-        public Location(int ID, string Name, string Description, Quest QuestAvailableHere, Monster MonsterLivingHere)
+        public Location(int id, string name, string description, Quest questAvailableHere, Monster monsterLivingHere)
         {
-            this.ID = ID;
-            this.Name = Name;
-            this.Description = Description;
-            this.QuestAvailableHere =  QuestAvailableHere;
-            this.MonsterLivingHere = MonsterLivingHere;
+            ID = id;
+            Name = name;
+            Description = description;
+            QuestAvailableHere =  questAvailableHere;
+            MonsterLivingHere = monsterLivingHere;
         }
 }
