@@ -56,7 +56,7 @@ public class Game
             Environment.Exit(0);
         }
 
-        public void Introduction()
+        public static void Introduction()
         {
             Console.Clear();
             
@@ -64,29 +64,21 @@ public class Game
             Console.WriteLine("The winds whisper of a hero destined to rise.");
             Thread.Sleep(sleepTime);
 
-            string playerName = "";
-            bool validName = false;
-
-            while (!validName)
+            string playerName;
+            while (true)
             {
                 Console.WriteLine("Tell me, child of Aincrad—what is your name?");
                 playerName = Console.ReadLine();
 
                 // Check if the name only contains letters
-                if (string.IsNullOrWhiteSpace(playerName) || !playerName.All(char.IsLetter))
-                {
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("That name does not seem quite right. Try again, child.");
-                }
-
-                if (playerName.Length < 3 || playerName.Length > 16)
+                if (string.IsNullOrWhiteSpace(playerName) || !playerName.All(char.IsLetter) || playerName.Length < 3)
                 {
                     Thread.Sleep(sleepTime);
                     Console.WriteLine("That name does not seem quite right. Try again, child.");
                 }
                 else
                 {
-                    validName = true; // Break the loop when the name is valid
+                    break; // Break the loop when the name is valid
                 }
             }
 
