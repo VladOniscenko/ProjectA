@@ -1,7 +1,4 @@
-public static class Quest
+public class Quest
 {
-    static Quest()
-    {
 
-    }
 }
