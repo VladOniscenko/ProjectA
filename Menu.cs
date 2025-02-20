@@ -8,7 +8,7 @@ using static System.Console;
 
 namespace KeyboardMenu
 {
-    class Menu
+    public class Menu
     {
         private int SelectedIndex;
         private string[] Options;
