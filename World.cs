@@ -153,7 +153,7 @@ public class World
         Locations.Add(spiderField);
     }
 
-    public static Location LocationByID(int id)
+    public static Location? LocationByID(int id)
     {
         foreach (Location location in Locations)
         {

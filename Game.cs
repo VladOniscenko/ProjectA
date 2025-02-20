@@ -69,8 +69,7 @@ public class Game
                 CurrentPlayer.DisplayMap();
 
                 // ask the player where they want to go
-                string whereToGo = Console.ReadLine();
-
+                string? whereToGo = Console.ReadLine();
                 if(whereToGo == "exit")
                 {
                     Playing = false;
@@ -108,7 +107,7 @@ public class Game
             Console.WriteLine("The winds whisper of a hero destined to rise.");
             Thread.Sleep(sleepTime);
 
-            string playerName;
+            string? playerName;
             while (true)
             {
                 Console.WriteLine("Tell me, child of Aincrad—what is your name?");
