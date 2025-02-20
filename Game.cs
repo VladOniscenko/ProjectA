@@ -1,21 +1,31 @@
+using System.Security.Cryptography;
+
 namespace KeyboardMenu;
 
 public class Game
     {
-        public void Start()
+        protected Player CurrentPlayer;
+        protected World CurrentWorld;
+        protected Menu MainMenu;
+        public bool IntroductionPlayed = false;
+        public bool Playing = false;
+        public Game()
         {
-            // WriteLine("Game started!");
+            CurrentWorld = new();
+            CurrentPlayer = new("Player");
 
-            // WriteLine("Press any key to exit...");
-
-            // ReadKey(true);
+            // set player current location
+            CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
 
             string prompt = "Please select an option:";
-            string[] options = { "Play", "About", "Quit" };
-            Menu mainMenu = new Menu(prompt, options);
-            int SelectedIndex = mainMenu.Run();
+            string[] options = ["Play", "About", "Quit"];
+            MainMenu = new Menu(prompt, options);
+        }
 
-            switch (SelectedIndex)
+        public void Start()
+        {
+            Console.Clear();
+            switch (MainMenu.Run())
             {
                 case 0:
                     StartGame();
@@ -31,12 +41,46 @@ public class Game
 
         private void StartGame()
         {
-            Introduction();
-            
-            Console.Clear();
-            Console.WriteLine("Game started!");
-            Console.WriteLine("Press any key to return to menu...");
-            Console.ReadKey(true);
+            Playing = true;
+
+            // play the introduction of the game and ask for the name of the player
+            if(IntroductionPlayed == false)
+            {
+                Introduction();
+                IntroductionPlayed = true;
+            }
+
+            while(Playing)
+            {
+                Console.Clear();
+                
+                /*
+                    Write the current possible options below (fight, quest, etc)
+                */
+
+                
+
+                /*
+                    Write the current possible options above (fight, quest, etc)
+                */
+
+
+                // display the map of current location
+                CurrentPlayer.DisplayMap();
+
+                // ask the player where they want to go
+                string whereToGo = Console.ReadLine();
+
+                if(whereToGo == "exit")
+                {
+                    Playing = false;
+                    continue;
+                }
+
+                // move the player to the location by direction
+                CurrentPlayer.MoveTo(whereToGo);
+            }
+
             Start(); // return to menu
         }
 
@@ -107,7 +151,7 @@ public class Game
             Thread.Sleep(sleepTime);
             Console.WriteLine($"Step forward, take up your weapon, and become the hero Aincrad needs, {playerName}.");
 
-            Console.WriteLine("\nPress enter to continue:");
+            Console.WriteLine("\nPress any key to continue:");
             Console.ReadLine();
         }
     }
