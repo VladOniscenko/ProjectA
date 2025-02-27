@@ -36,7 +36,7 @@ public class World
         PopulateLocations();
     }
 
-
+    
     // public static void PopulateWeapons()
     // {
     //     Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 5));
