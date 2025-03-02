@@ -46,7 +46,7 @@ public class Game
             // play the introduction of the game and ask for the name of the player
             if(IntroductionPlayed == false)
             {
-                Introduction();
+                CurrentPlayer.Name = Introduction();
                 IntroductionPlayed = true;
             }
 
@@ -99,7 +99,7 @@ public class Game
             Environment.Exit(0);
         }
 
-        public static void Introduction()
+        public static string Introduction()
         {
             Console.Clear();
             
@@ -152,5 +152,6 @@ public class Game
 
             Console.WriteLine("\nPress any key to continue:");
             Console.ReadLine();
+            return playerName;
         }
     }
