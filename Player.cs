@@ -21,9 +21,6 @@ public class Player
     public void HealPlayer(int healAmount){
         CurrentHitPoints = Math.Min(MaximumHitPoints, CurrentHitPoints + healAmount);
     }
-        // Console.WriteLine("Please enter your name");
-        // string name = Console.ReadLine();
-        // Player player = new Player(name);
 
     public void MoveToLocation(Location? location){
         if (location is null){
