@@ -46,7 +46,6 @@ public class Game
             // play the introduction of the game and ask for the name of the player
             if(IntroductionPlayed == false)
             {
-                CurrentPlayer.Name = Introduction();
                 IntroductionPlayed = true;
             }
 
@@ -67,6 +66,7 @@ public class Game
 
                 // display the map of current location
                 CurrentPlayer.DisplayMap();
+
 
                 // ask the player where they want to go
                 string? whereToGo = Console.ReadLine();
@@ -99,7 +99,7 @@ public class Game
             Environment.Exit(0);
         }
 
-        public static string Introduction()
+        public void Introduction()
         {
             Console.Clear();
             
@@ -121,6 +121,7 @@ public class Game
                 }
                 else
                 {
+                    CurrentPlayer.Name = playerName;
                     break; // Break the loop when the name is valid
                 }
             }
@@ -152,6 +153,5 @@ public class Game
 
             Console.WriteLine("\nPress any key to continue:");
             Console.ReadLine();
-            return playerName;
         }
     }
