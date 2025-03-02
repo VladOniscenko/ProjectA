@@ -1,7 +1,7 @@
 public class Quest
 {
-    static Quest()
+    public Quest()
     {
-
+        
     }
 }
