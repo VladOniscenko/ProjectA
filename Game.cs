@@ -68,6 +68,7 @@ public class Game
                 // display the map of current location
                 CurrentPlayer.DisplayMap();
 
+
                 // ask the player where they want to go
                 string? whereToGo = Console.ReadLine();
                 if(whereToGo == "exit")
@@ -99,7 +100,7 @@ public class Game
             Environment.Exit(0);
         }
 
-        public static void Introduction()
+        public void Introduction()
         {
             Console.Clear();
             
@@ -121,6 +122,7 @@ public class Game
                 }
                 else
                 {
+                    CurrentPlayer.Name = playerName;
                     break; // Break the loop when the name is valid
                 }
             }
