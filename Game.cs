@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace KeyboardMenu;
+namespace ProjectA;
 
 public class Game
     {

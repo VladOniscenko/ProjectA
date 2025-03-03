@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KeyboardMenu
+namespace ProjectA
 {
     class Program
     {

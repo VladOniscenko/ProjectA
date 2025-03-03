@@ -6,7 +6,7 @@ using static System.Console;
 // used this video to help me get started
 // https://www.youtube.com/watch?v=qAWhGEPMlS8
 
-namespace KeyboardMenu
+namespace ProjectA
 {
     public class Menu
     {

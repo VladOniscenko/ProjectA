@@ -12,26 +12,26 @@ public class Quest
     // - een locatie waar de quest plaatsvindt
     // - een beloning? 
 
-    string questName;
-    string questDescription;
-    string questGiver;
-    Monster monsterToKill;
-    int amountOfMonstersToKill;
-    Location locationOfQuest;
-    string reward;
-    bool isCompleted;
+    public string QuestName;
+    public string QuestDescription;
+    public string QuestGiver;
+    public Monster MonsterToKill;
+    public int AmountOfMonstersToKill;
+    public Location LocationOfQuest;
+    public string Reward;
+    public bool IsCompleted;
 
     // Volledige constructor
     public Quest(string name, string description, string giver, Monster monster, int amount, Location location, string reward)
     {
-        this.questName = name;
-        this.questDescription = description;
-        this.questGiver = giver;
-        this.monsterToKill = monster;
-        this.amountOfMonstersToKill = amount;
-        this.locationOfQuest = location;
-        this.reward = reward;
-        this.isCompleted = false; // Default op false
+        QuestName = name;
+        QuestDescription = description;
+        QuestGiver = giver;
+        MonsterToKill = monster;
+        AmountOfMonstersToKill = amount;
+        LocationOfQuest = location;
+        Reward = reward;
+        IsCompleted = false; // Default op false
     }
 }
 
