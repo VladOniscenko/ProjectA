@@ -12,7 +12,7 @@ public class Game
         public Game()
         {
             CurrentWorld = new();
-            CurrentPlayer = new("Player");
+            CurrentPlayer = new Player("Player", this);
 
             // set player current location
             CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
@@ -80,6 +80,21 @@ public class Game
                 CurrentPlayer.MoveTo(whereToGo);
             }
 
+            Start(); // return to menu
+        }
+
+        public void OnPlayerDeath()
+        {
+            Console.Clear();
+            Console.WriteLine("You have fallen in battle...");
+            Thread.Sleep(2000);
+            Console.WriteLine("The town of Aincrad remains in peril.");
+            Thread.Sleep(2000);
+            Console.WriteLine("Perhaps another hero will rise...");
+            Thread.Sleep(2000);
+
+            Console.WriteLine("Press any key to return to menu...");
+            Console.ReadKey(true);
             Start(); // return to menu
         }
 
