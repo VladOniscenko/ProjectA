@@ -50,7 +50,7 @@ public class Game
             // play the introduction of the game and ask for the name of the player
             if(IntroductionPlayed == false)
             {
-                // Introduction();
+                Introduction();
                 IntroductionPlayed = true;
             }
 
