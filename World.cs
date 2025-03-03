@@ -76,12 +76,14 @@ public class World
 
         Location alchemistsGarden = new Location(LOCATION_ID_ALCHEMISTS_GARDEN, "Alchemist's garden", "Many plants are growing here.");
         alchemistsGarden.MonsterLivingHere = MonsterByID(MONSTER_ID_RAT);
+        alchemistsGarden.FightAvailableHere = QuestByID(QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
 
         Location farmhouse = new Location(LOCATION_ID_FARMHOUSE, "Farmhouse", "There is a small farmhouse, with a farmer in front.", questGiver:"Farmer");
         farmhouse.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_FARMERS_FIELD);
 
         Location farmersField = new Location(LOCATION_ID_FARM_FIELD, "Farmer's field", "You see rows of vegetables growing here.");
         farmersField.MonsterLivingHere = MonsterByID(MONSTER_ID_SNAKE);
+        farmersField.FightAvailableHere = QuestByID(QUEST_ID_CLEAR_FARMERS_FIELD);
 
         Location guardPost = new Location(LOCATION_ID_GUARD_POST, "Guard post", "There is a large, tough-looking guard here.");
 
@@ -90,6 +92,7 @@ public class World
 
         Location spiderField = new Location(LOCATION_ID_SPIDER_FIELD, "Forest", "You see spider webs covering covering the trees in this forest.");
         spiderField.MonsterLivingHere = MonsterByID(MONSTER_ID_GIANT_SPIDER);
+        spiderField.FightAvailableHere = QuestByID(QUEST_ID_COLLECT_SPIDER_SILK);
 
         // Link the locations together
         home.LocationToNorth = townSquare;
