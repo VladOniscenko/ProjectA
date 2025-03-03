@@ -3,14 +3,14 @@ public class Weapon
     // Attributes of the "Blueprint"
     public string Name { get; set; }
     public int Damage { get; set; }
-    public double Weight { get; set; }
+    public int ID { get; set; }
 
     // Constructor -> Create an object of the "blueprint"
-    public Weapon(string name, int damage, double weight)
+    public Weapon(int id, string name, int damage)
     {
         Name = name;
         Damage = damage;
-        Weight = weight;
+        ID = id;
     }
 
     // Method of the "blueprint" -> Actions of the weapon
@@ -21,7 +21,7 @@ public class Weapon
 
     public void ShowStats()
     {
-        Console.WriteLine($"Weapon: {Name}\n Damage: {Damage}\n Weight: {Weight}");
+        Console.WriteLine($"Weapon: {Name}\n Damage: {Damage}\n");
     }
 
     public void Upgrade(int extraDamage)
