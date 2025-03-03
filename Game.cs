@@ -162,9 +162,9 @@ public class Game
 
         public void Fight()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("U are in a fight");
                 Thread.Sleep(1000);
             }
