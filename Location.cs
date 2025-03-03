@@ -3,15 +3,15 @@ public class Location
         public int ID;
         public string Name;
         public string Description;
-        public Quest QuestAvailableHere;
-        public Monster MonsterLivingHere;
+        public Quest? QuestAvailableHere;
+        public Monster? MonsterLivingHere;
         public Location? LocationToNorth; 
         public Location? LocationToEast;
         public Location? LocationToSouth; 
         public Location? LocationToWest; 
 
 
-        public Location(int id, string name, string description, Quest questAvailableHere, Monster monsterLivingHere)
+        public Location(int id, string name, string description, Quest? questAvailableHere = null, Monster? monsterLivingHere = null)
         {
             ID = id;
             Name = name;
@@ -21,7 +21,7 @@ public class Location
         }
         
         
-        public void DisplayMap(Location location)
+        public void DisplayMap()
         {
         
             bool north = LocationToNorth is not null;
@@ -29,10 +29,10 @@ public class Location
             bool south = LocationToSouth is not null;
             bool west = LocationToWest is not null;
             string locationName = Name;
-        
-            Console.WriteLine("Where would you like to go?");
+            string locationDescription = Description;
+
+            Console.WriteLine(locationDescription);
             Console.WriteLine($"You are at: {locationName} From here you can go:");
-        
             if (north)
             {
                 Console.WriteLine("    N");
@@ -63,5 +63,7 @@ public class Location
                 Console.WriteLine("    |");
                 Console.WriteLine("    S");
             }
+
+            Console.Write("\n\nWhere would you like to go? ");
         }
 }
