@@ -57,8 +57,8 @@ public class World
 
     public static void PopulateQuests()
     {
-        Quest clearAlchemistGarden = new Quest(QUEST_ID_CLEAR_ALCHEMIST_GARDEN, "Clear the alchemist's garden", "Kill rats in the alchemist's garden ", 3, WeaponByID(WEAPON_ID_CLUB));
-        Quest clearFarmersField = new Quest(QUEST_ID_CLEAR_FARMERS_FIELD, "Clear the farmer's field", "Kill snakes in the farmer's field", 3, WeaponByID(WEAPON_ID_GREAT_SWORD));
+        Quest clearAlchemistGarden = new Quest(QUEST_ID_CLEAR_ALCHEMIST_GARDEN, "Clear the alchemist's garden", "Those rats art nibbling on mine own h'rbs! I couldst very much useth an adventur'r to taketh careth of those folk …", 3, WeaponByID(WEAPON_ID_CLUB));
+        Quest clearFarmersField = new Quest(QUEST_ID_CLEAR_FARMERS_FIELD, "Clear the farmer's field", "I can't w'rk mine own landeth with those pesky snakes slith'ring 'round! Shall thee holp me?", 3, WeaponByID(WEAPON_ID_GREAT_SWORD));
         Quest clearSpidersForest = new Quest(QUEST_ID_COLLECT_SPIDER_SILK, "Collect spider silk", "Kill spiders in the spider forest", 4);
         
         Quests.Add(clearAlchemistGarden);
@@ -71,13 +71,13 @@ public class World
         // Create each location
         Location home = new Location(LOCATION_ID_HOME, "Home", "Your house. You really need to clean up the place.");
         Location townSquare = new Location(LOCATION_ID_TOWN_SQUARE, "Town square", "You see a fountain.");
-        Location alchemistHut = new Location(LOCATION_ID_ALCHEMIST_HUT, "Alchemist's hut", "There are many strange plants on the shelves.");
+        Location alchemistHut = new Location(LOCATION_ID_ALCHEMIST_HUT, "Alchemist's hut", "There are many strange plants on the shelves.", questGiver:"Alchemist");
         alchemistHut.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
 
         Location alchemistsGarden = new Location(LOCATION_ID_ALCHEMISTS_GARDEN, "Alchemist's garden", "Many plants are growing here.");
         alchemistsGarden.MonsterLivingHere = MonsterByID(MONSTER_ID_RAT);
 
-        Location farmhouse = new Location(LOCATION_ID_FARMHOUSE, "Farmhouse", "There is a small farmhouse, with a farmer in front.");
+        Location farmhouse = new Location(LOCATION_ID_FARMHOUSE, "Farmhouse", "There is a small farmhouse, with a farmer in front.", questGiver:"Farmer");
         farmhouse.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_FARMERS_FIELD);
 
         Location farmersField = new Location(LOCATION_ID_FARM_FIELD, "Farmer's field", "You see rows of vegetables growing here.");
@@ -85,7 +85,7 @@ public class World
 
         Location guardPost = new Location(LOCATION_ID_GUARD_POST, "Guard post", "There is a large, tough-looking guard here.");
 
-        Location bridge = new Location(LOCATION_ID_BRIDGE, "Bridge", "A stone bridge crosses a wide river.");
+        Location bridge = new Location(LOCATION_ID_BRIDGE, "Bridge", "A stone bridge crosses a wide river.", questGiver:"Throll");
         bridge.QuestAvailableHere = QuestByID(QUEST_ID_COLLECT_SPIDER_SILK);
 
         Location spiderField = new Location(LOCATION_ID_SPIDER_FIELD, "Forest", "You see spider webs covering covering the trees in this forest.");
