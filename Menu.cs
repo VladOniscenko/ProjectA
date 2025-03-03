@@ -11,10 +11,10 @@ namespace ProjectA
     public class Menu
     {
         private int SelectedIndex;
-        private string[] Options;
+        private Dictionary<char, string> Options;
         private string Prompt;
             
-        public Menu(string prompt, string[] options)
+        public Menu(string prompt, Dictionary<char, string> options)
         {
             Prompt = prompt;
             Options = options;
@@ -25,11 +25,14 @@ namespace ProjectA
         private void DisplayOptions()
         {
             WriteLine(Prompt);
+            
             //  loop over options
-            for (int i = 0; i < Options.Length; i++)
+            int i = 0;
+            foreach (var option in Options)
             {
-                string currentOption = Options[i];
+                string currentOption = option.Value; // Get the option value (string)
                 string prefix;
+
                 if (i == SelectedIndex)
                 {
                     prefix = "*";
@@ -42,12 +45,14 @@ namespace ProjectA
                     ForegroundColor = ConsoleColor.White;
                     BackgroundColor = ConsoleColor.Black;
                 }
+
                 WriteLine($"{prefix} << {currentOption} >>");
+                i++; // Increment index to track selected option
             }
             ResetColor();
         }
 
-        public int Run()
+        public char Run()
         {
             ConsoleKey keyPressed;
             do
@@ -63,13 +68,13 @@ namespace ProjectA
                     SelectedIndex--;
                     if (SelectedIndex == -1)
                     {
-                        SelectedIndex = Options.Length - 1;
+                        SelectedIndex = Options.Count - 1;
                     }
                 }
                 else if (keyPressed == ConsoleKey.DownArrow)
                 {
                     SelectedIndex++;
-                    if (SelectedIndex == Options.Length)
+                    if (SelectedIndex == Options.Count)
                     {
                         SelectedIndex = 0;
                     }
@@ -77,7 +82,8 @@ namespace ProjectA
 
             } while (keyPressed != ConsoleKey.Enter);
             
-            return SelectedIndex;
+            List<char> optionKeys = Options.Keys.ToList();
+            return optionKeys[SelectedIndex];
         }
 
     }
