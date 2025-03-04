@@ -160,13 +160,46 @@ public class Game
             Console.ReadLine();
         }
 
+        public void CheckIfPlayerWonTheGame()
+        {
+            // logic to check if player won the game
+        }
+        
+        public void CheckIfFightWon()
+        {
+            Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+            Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
+            
+            if (quest.IsCompleted)
+            {
+                // add logic of give a reward to player
+                    
+                //
+                
+                Console.WriteLine("Wow u did a good job!");
+                Console.WriteLine($"U defeated {monster.Name}");
+                
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey(true);
+                
+            }
+        }
+        
         public void Fight()
         {
+            Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+            Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
+
+            // set IsCompleted to true if won
+            
             Console.Clear();
             while (true)
             {
+                // remove this bellow and write fight logic
                 Console.WriteLine("U are in a fight");
-                Thread.Sleep(1000);
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey(true);
+                break;
             }
         }
         
@@ -232,7 +265,9 @@ public class Game
                         TalkToNpc();
                         break;
                     case 'F':
-                        Fight(); // to implement the fight
+                        Fight();
+                        CheckIfFightWon();
+                        CheckIfPlayerWonTheGame();
                         break;
                 }
             }
