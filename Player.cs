@@ -4,7 +4,7 @@ public class Player
     public int CurrentHitPoints;
     public int MaximumHitPoints;
     // public Weapon CurrentWeapon;
-    public Location? CurrentLocation;
+    public Location CurrentLocation;
 
     public Player(string name){
         Name = name;
@@ -32,6 +32,8 @@ public class Player
     }
 
     public void DisplayMap(){
+        Console.Clear();
+        
         if(CurrentLocation is not null){
             CurrentLocation.DisplayMap();
             return;

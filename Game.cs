@@ -18,22 +18,26 @@ public class Game
             CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
 
             string prompt = "Please select an option:";
-            string[] options = ["Play", "About", "Quit"];
+            Dictionary<char, string> options = new ()
+            {
+                {'P', "Play"},
+                {'A', "About"},
+                {'Q', "Quit"}
+            };
             MainMenu = new Menu(prompt, options);
         }
 
         public void Start()
         {
-            Console.Clear();
             switch (MainMenu.Run())
             {
-                case 0:
+                case 'P':
                     StartGame();
                     break;
-                case 1:
+                case 'A':
                     ShowAbout();
                     break;
-                case 2:
+                case 'Q':
                     ExitGame();
                     break;
             }
@@ -52,12 +56,12 @@ public class Game
 
             while(Playing)
             {
-                Console.Clear();
-                
                 /*
                     Write the current possible options below (fight, quest, etc)
                 */
-
+                
+                // check if location has quest available to accept or go in a fight if quest was accepted
+                CheckForActions();
                 
 
                 /*
@@ -154,5 +158,118 @@ public class Game
 
             Console.WriteLine("\nPress any key to continue:");
             Console.ReadLine();
+        }
+
+        public void CheckIfPlayerWonTheGame()
+        {
+            // logic to check if player won the game
+        }
+        
+        public void CheckIfFightWon()
+        {
+            Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+            Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
+            
+            if (quest.IsCompleted)
+            {
+                // add logic of give a reward to player
+                    
+                //
+                
+                Console.WriteLine("Wow, you did a good job!");
+                Console.WriteLine($"You defeated {monster.Name}");
+                
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey(true);
+                
+            }
+        }
+        
+        public void Fight()
+        {
+            Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+            Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
+
+            // set IsCompleted to true if won
+            
+            Console.Clear();
+            while (true)
+            {
+                // remove this below and write fight logic
+                Console.WriteLine("You are in a fight");
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey(true);
+                break;
+            }
+        }
+        
+        public void TalkToNpc()
+        {
+            if (CurrentPlayer.CurrentLocation.QuestAvailableHere != null &&
+                !CurrentPlayer.CurrentLocation.QuestAvailableHere.AcceptedByPlayer)
+            {
+                Quest quest = CurrentPlayer.CurrentLocation.QuestAvailableHere;
+
+                Console.Clear();
+                
+                Console.WriteLine(quest.QuestDescription);
+                
+                Thread.Sleep(2000);
+                Console.WriteLine(quest.QuestName);
+
+                string? accepted;
+
+                do
+                {
+                    Console.WriteLine("Will you accept the quest? Y/n");
+                    accepted = Console.ReadLine()?.Trim().ToUpper();
+
+                } while (accepted != "Y" && accepted != "N");
+
+                if (accepted == "Y")
+                {
+                    quest.AcceptedByPlayer = true;
+                }
+            }
+        }
+        
+
+        public void CheckForActions()
+        {
+            Dictionary<char, string> actionOptionsList = new ();
+            
+            if (CurrentPlayer.CurrentLocation.QuestAvailableHere != null &&
+                !CurrentPlayer.CurrentLocation.QuestAvailableHere.AcceptedByPlayer)
+            {
+                actionOptionsList.Add('T', $"Talk to {CurrentPlayer.CurrentLocation.QuestGiver}");
+            }
+            
+            if (CurrentPlayer.CurrentLocation.MonsterLivingHere != null && 
+                CurrentPlayer.CurrentLocation.FightAvailableHere != null &&
+                CurrentPlayer.CurrentLocation.FightAvailableHere.AcceptedByPlayer)
+            {
+                actionOptionsList.Add('F', $"Fight the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name}");
+            }
+            
+            if (actionOptionsList.Count > 0)
+            {
+                actionOptionsList.Add('W', "Walk by");
+
+                string prompt = $"{CurrentPlayer.CurrentLocation.Name} \n{CurrentPlayer.CurrentLocation.Description} \n\nPlease select an option:";
+                Menu actionMenu = new Menu(prompt, actionOptionsList);
+                switch (actionMenu.Run())
+                {
+                    case 'W':
+                        break;
+                    case 'T':
+                        TalkToNpc();
+                        break;
+                    case 'F':
+                        Fight();
+                        CheckIfFightWon();
+                        CheckIfPlayerWonTheGame();
+                        break;
+                }
+            }
         }
     }

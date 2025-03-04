@@ -6,6 +6,7 @@ public class Quest
     public Weapon? Reward;
     public bool IsCompleted;
     public int ID;
+    public bool AcceptedByPlayer;
 
     public Quest(int id, string name, string description, int amount, Weapon? reward = null)
     {
@@ -15,6 +16,7 @@ public class Quest
         AmountOfMonstersToKill = amount;
         Reward = reward;
         IsCompleted = false; // Default op false
+        AcceptedByPlayer = false;
     }
 }
 
