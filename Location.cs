@@ -8,16 +8,18 @@ public class Location
         public Location? LocationToNorth; 
         public Location? LocationToEast;
         public Location? LocationToSouth; 
-        public Location? LocationToWest; 
+        public Location? LocationToWest;
+        public Quest? FightAvailableHere;
+        public string? QuestGiver;
 
-
-        public Location(int id, string name, string description, Quest? questAvailableHere = null, Monster? monsterLivingHere = null)
+        public Location(int id, string name, string description, Quest? questAvailableHere = null, Monster? monsterLivingHere = null, string? questGiver = null)
         {
             ID = id;
             Name = name;
             Description = description;
             QuestAvailableHere =  questAvailableHere;
             MonsterLivingHere = monsterLivingHere;
+            QuestGiver = questGiver;
         }
         
         
@@ -29,7 +31,6 @@ public class Location
             bool south = LocationToSouth is not null;
             bool west = LocationToWest is not null;
             string locationName = Name;
-            string locationDescription = Description;
 
             char[,] miniMap = {
             { ' ', ' ', ' ', ' ', 'P', ' ', ' ', ' ' },
