@@ -26,7 +26,7 @@ namespace ProjectA
         {
             WriteLine(Prompt);
             
-            //  loop over options
+            //  Loop over options
             int i = 0;
             foreach (var option in Options)
             {

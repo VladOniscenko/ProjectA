@@ -176,8 +176,8 @@ public class Game
                     
                 //
                 
-                Console.WriteLine("Wow u did a good job!");
-                Console.WriteLine($"U defeated {monster.Name}");
+                Console.WriteLine("Wow, you did a good job!");
+                Console.WriteLine($"You defeated {monster.Name}");
                 
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey(true);
@@ -195,8 +195,8 @@ public class Game
             Console.Clear();
             while (true)
             {
-                // remove this bellow and write fight logic
-                Console.WriteLine("U are in a fight");
+                // remove this below and write fight logic
+                Console.WriteLine("You are in a fight");
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey(true);
                 break;
