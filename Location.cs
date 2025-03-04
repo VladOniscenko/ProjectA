@@ -31,28 +31,32 @@ public class Location
             string locationName = Name;
             string locationDescription = Description;
 
-
             char[,] miniMap = {
-            { ' ', ' ', 'P', ' ', ' ', ' ' },
-            { ' ', ' ', 'A', ' ', ' ', ' ' },
-            { 'V', 'F', 'T', 'G', 'B', 'S' },
-            { ' ', ' ', 'H', ' ', ' ', ' ' }
+            { ' ', ' ', ' ', ' ', 'P', ' ', ' ', ' ' },
+            { ' ', ' ', ' ', ' ', 'A', ' ', ' ', ' ' },
+            { ' ', ' ', 'V', 'F', 'T', 'G', 'B', 'S' },
+            { ' ', ' ', ' ', ' ', 'H', ' ', ' ', ' ' }
             };
 
             var coordinates = new Dictionary<int, int[]>{
-                {1, [2, 3]},
-                {2, [2, 2]},
-                {3, [3, 2]},
-                {4, [2, 1]},
-                {5, [2, 0]},
-                {6, [1, 2]},
-                {7, [0, 2]},
-                {8, [4, 2]},
-                {9, [5, 2]}
+                {1, [4, 3]},
+                {2, [4, 2]},
+                {3, [5, 2]},
+                {4, [4, 1]},
+                {5, [4, 0]},
+                {6, [3, 2]},
+                {7, [2, 2]},
+                {8, [6, 2]},
+                {9, [7, 2]}
             };
 
             int currentX = coordinates[ID][0];
             int currentY = coordinates[ID][1];
+
+            Console.WriteLine(locationDescription);
+            Console.WriteLine($"You are at: {locationName} From here you can go:");
+            
+            Console.WriteLine();
 
             for (int i = 0; i < miniMap.GetLength(0); i++)
             {
@@ -71,9 +75,8 @@ public class Location
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
 
-            Console.WriteLine(locationDescription);
-            Console.WriteLine($"You are at: {locationName} From here you can go:");
             if (north)
             {
                 Console.WriteLine("    N");
