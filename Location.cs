@@ -38,54 +38,21 @@ public class Location
             { 'V', 'F', 'T', 'G', 'B', 'S' },
             { ' ', ' ', 'H', ' ', ' ', ' ' }
             };
-            int currentX = 2;
-            int currentY = 3;
-            switch(ID)
-            {
-                case 1:
-                currentY = 3;
-                break;
 
-                case 2:
-                currentY = 2;
-                break;
+            var coordinates = new Dictionary<int, int[]>{
+                {1, [2, 3]},
+                {2, [2, 2]},
+                {3, [3, 2]},
+                {4, [2, 1]},
+                {5, [2, 0]},
+                {6, [1, 2]},
+                {7, [0, 2]},
+                {8, [4, 2]},
+                {9, [5, 2]}
+            };
 
-                case 3:
-                currentX = 3;
-                currentY = 2;
-                break;
-
-                case 4:
-                currentY = 1;
-                break;
-
-                case 5:
-                currentY = 0;
-                break;
-
-                case 6:
-                currentX = 1;
-                currentY = 2;
-                break;
-
-                case 7:
-                currentX = 0;
-                currentY = 2;
-                break;
-
-                case 8:
-                currentX = 4;
-                currentY = 2;
-                break;
-
-                case 9:
-                currentX = 5;
-                currentY = 2;
-                break;
-
-            }
-        
-            // List<string> minimap = new List<string>(locations);
+            int currentX = coordinates[ID][0];
+            int currentY = coordinates[ID][1];
 
             for (int i = 0; i < miniMap.GetLength(0); i++)
             {
