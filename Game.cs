@@ -12,7 +12,7 @@ public class Game
         public Game()
         {
             CurrentWorld = new();
-            CurrentPlayer = new("Player");
+            CurrentPlayer = new("Player", World.WeaponByID(1));
 
             // set player current location
             CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
@@ -175,9 +175,20 @@ public class Game
                 // add logic of give a reward to player
                     
                 //
-                
-                Console.WriteLine("Wow, you did a good job!");
-                Console.WriteLine($"You defeated {monster.Name}");
+
+                Console.WriteLine($"You defeated the {monster.Name}s!");
+
+                if(quest.Reward != null){
+                    Console.WriteLine($"The {monster.Name} left behind a {quest.Reward.Name}...");
+                    Console.WriteLine($"Will you equip the {quest.Reward.Name}? y/n");
+                    string? accepted = Console.ReadLine()?.Trim().ToUpper();
+                    while (accepted != "Y" && accepted != "N");
+                    if (accepted == "Y")
+                    {
+                        CurrentPlayer.CurrentWeapon = quest.Reward;
+                    }
+
+                }
                 
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey(true);
