@@ -3,14 +3,14 @@ public class Player
     public string Name;
     public int CurrentHitPoints;
     public int MaximumHitPoints;
-    // public Weapon CurrentWeapon;
+    public Weapon CurrentWeapon;
     public Location CurrentLocation;
 
-    public Player(string name){
+    public Player(string name, Weapon currentWeapon){
         Name = name;
         CurrentHitPoints = 30;
         MaximumHitPoints = 30;
-        // this.CurrentWeapon = CurrentWeapon; //starts with rusty sword
+        CurrentWeapon = currentWeapon;
         // this.CurrentLocation = CurrentLocation; //starts at your house
     }
 
