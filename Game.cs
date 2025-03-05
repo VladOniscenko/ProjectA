@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectA;
 
@@ -132,7 +133,7 @@ public class Game
             }
 
             Thread.Sleep(sleepTime);
-            Console.WriteLine($"Remember your name, {playerName}—for the path ahead is long and perilous.");
+            Console.WriteLine($"Remember your name, {playerName} for the path ahead is long and perilous.");
             Thread.Sleep(sleepTime);
             Console.WriteLine($"The town of Aincrad lives in fear.");
             Thread.Sleep(sleepTime);
@@ -195,13 +196,107 @@ public class Game
             Console.Clear();
             while (true)
             {
-                // remove this below and write fight logic
-                Console.WriteLine("You are in a fight");
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey(true);
+                Dictionary<char, string> encounterOptionsList = new()
+                {
+                    { 'E', $"Engage battle with the {monster.Name}." },
+                    { 'F', $"Flee from the {monster.Name}." }
+                };
+                
+                Menu encounterMenu = new($"You encounterd a {monster.Name}!", encounterOptionsList );
+                switch (encounterMenu.Run())
+                {
+                    case 'E':
+                        Console.WriteLine("Start the battle");
+                        battleTurn(monster);
+                        break;
+                    case 'F':
+                        Console.WriteLine("Flee");
+                        break;
+                }
                 break;
             }
         }
+
+        public void battleTurn(Monster currentMonster)
+        {   
+            int monsterCount;
+            Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+
+            Dictionary<char, string> battleOptionList = new()
+            {
+                {'A', $"Attack the {currentMonster.Name}"},
+                {'H', "Heal yourself"},
+                {'T', "Try to talk it out ¯\\_(ツ)_/¯ "},
+                {'F', "Flee (This will cancel the quest)"}
+            };
+
+            Dictionary<char, string> continueOptionList = new()
+            {
+                {'Y', "Yes"},
+                {'N', "No"},
+            };
+
+
+            Menu battleMenu = new("What will be your next move?", battleOptionList);
+            Menu continueMenu = new($"You killed the {currentMonster.Name}, But the next came. \n Will you continue?", continueOptionList);
+        if (quest.IsCompleted == false)
+        {
+            for (monsterCount = 1; monsterCount < 3 ;)
+                {
+                    while(currentMonster.CurrentHitPoints > 0)
+                    {
+                        switch(battleMenu.Run())
+                        {
+                            case 'A':
+                            currentMonster.damageMonster(1);// adjust when weapon is made
+                            Console.WriteLine($"You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
+                            Thread.Sleep(1000);
+                            monsterTurn();
+                            if (currentMonster.CurrentHitPoints >= 0)
+                            {
+                                switch(continueMenu.Run())
+                                {
+                                    case 'Y':
+                                    monsterCount++;
+                                    break;
+                                    case 'N':
+                                    // go out the fight
+                                    break;
+                                }
+                            }
+                            break;
+                            case 'H':
+                            CurrentPlayer.HealPlayer(3);
+                            Console.WriteLine($"You healed yourself your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
+                            Thread.Sleep(1000);
+                            monsterTurn();
+                            break;
+                            case 'T':
+                            Console.WriteLine("Snakes cant talk...");
+                            Thread.Sleep(1000);
+                            monsterTurn();
+                            break;
+                            case 'F':
+                            // canceling the quest
+                            break;
+                        }
+                    }
+                }
+            }
+            quest.IsCompleted = true;
+        }
+ 
+
+        public void monsterTurn()
+        {
+            Console.WriteLine("Now its the snake its turn");
+            CurrentPlayer.DamagePlayer(CurrentPlayer.CurrentLocation.MonsterLivingHere.MaximumDamage);
+            Thread.Sleep(1000);
+
+            Console.WriteLine($"The snake attack you, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
+            Thread.Sleep(1000);
+        }
+
         
         public void TalkToNpc()
         {
@@ -248,7 +343,7 @@ public class Game
                 CurrentPlayer.CurrentLocation.FightAvailableHere != null &&
                 CurrentPlayer.CurrentLocation.FightAvailableHere.AcceptedByPlayer)
             {
-                actionOptionsList.Add('F', $"Fight the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name}");
+                actionOptionsList.Add('F', $"Explore {CurrentPlayer.CurrentLocation.Name}");
             }
             
             if (actionOptionsList.Count > 0)
