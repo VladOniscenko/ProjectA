@@ -92,7 +92,43 @@ public class Game
     private void ShowAbout()
     {
         Console.Clear();
-        Console.WriteLine("About this game...");
+        Console.WriteLine("Welcome to Our Console Game!");
+        Console.WriteLine("Developed by CookieBytes for Sharkshark\n");
+    
+        List<string> collaborators = new List<string>
+        {
+            "Vladislav Oniscenko",
+            "Younis Mehdaoui",
+            "Dimitri Korenhof",
+            "Brooklyn Robert",
+            "Angel Nokhai"
+        };
+
+        Random rand = new Random();
+        for (int i = collaborators.Count - 1; i > 0; i--)
+        {
+            int j = rand.Next(0, i + 1);
+            string temp = collaborators[i];
+            collaborators[i] = collaborators[j];
+            collaborators[j] = temp;
+        }
+        
+        Console.WriteLine("Collaborators:");
+        foreach (var collaborator in collaborators)
+        {
+            Console.WriteLine($"- {collaborator}");
+        }
+        Console.WriteLine();
+
+        Console.WriteLine("About CookieBytes:");
+        Console.WriteLine("At CookieBytes, we specialize in crafting innovative and engaging gaming experiences.");
+        Console.WriteLine("Whether it's creating original concepts or bringing your favorite ideas to life, our goal is to push the boundaries of game development.");
+        Console.WriteLine("We are a passionate team committed to providing high-quality entertainment that resonates with gamers of all kinds.\n");
+
+        Console.WriteLine("Thank you for playing our game!");
+        Console.WriteLine("We hope you enjoy the adventure and look forward to bringing more exciting projects in the future.");
+        
+        Console.WriteLine();
         Console.WriteLine("Press any key to return to menu...");
         Console.ReadKey(true);
         Start(); // return to menu
@@ -116,7 +152,7 @@ public class Game
         string? playerName;
         while (true)
         {
-            Console.WriteLine("Tell me, child of Aincrad—what is your name?");
+            Console.WriteLine($"Tell me, child of {World.WILLAGE_NAME}, what is your name?");
             playerName = Console.ReadLine();
 
             // Check if the name only contains letters
@@ -134,8 +170,8 @@ public class Game
 
         string[] storyLines = new string[]
         {
-            $"Remember your name, {playerName}—for the path ahead is long and perilous.",
-            "The town of Aincrad lives in fear.",
+            $"Remember your name, {playerName} for the path ahead is long and perilous.",
+            $"The town of {World.WILLAGE_NAME} lives in fear.",
             "Giant spiders lurk within the village gates.",
             "At night, they creep in, taking livestock—and worse.",
             "The townsfolk whisper of heroes, but none remain.",
@@ -145,7 +181,7 @@ public class Game
             "Legends speak of a sacred blade, lost to time.",
             "Caliburn—the sword of light, waiting to find purpose.",
             "Some say only in the darkest battles does fate reveal its chosen blade.",
-            $"Step forward, take up your weapon, and become the hero Aincrad needs, {playerName}."
+            $"Step forward, take up your weapon, and become the hero {World.WILLAGE_NAME} needs, {playerName}."
         };
         
         PrintWithPause(storyLines);
@@ -157,14 +193,14 @@ public class Game
         string[] winMessages = new string[]
         {
             "The battle has been fought. The sword of light, Caliburn, has cleaved through darkness.",
-            "The giant spiders that once terrorized Aincrad now lie defeated.",
+            $"The giant spiders that once terrorized {World.WILLAGE_NAME} now lie defeated.",
             "The townsfolk, who once whispered of heroes, now sing songs of your bravery.",
-            "You stand at the gates of Aincrad, your heart filled with pride.",
+            $"You stand at the gates of {World.WILLAGE_NAME}, your heart filled with pride.",
             $"The village is safe once again, thanks to you, {CurrentPlayer.Name}.",
             "You have proven yourself worthy of the legends told in the shadows.",
             "As the sun rises over the horizon, a new chapter begins.",
             $"You, {CurrentPlayer.Name}, are no longer a mere adventurer...",
-            "You are the hero of Aincrad.",
+            $"You are the hero of {World.WILLAGE_NAME}.",
             $"\nCongratulations, {CurrentPlayer.Name}! You have won the game!"
         };
         
