@@ -55,7 +55,6 @@ public class Location
             int currentX = coordinates[ID][0];
             int currentY = coordinates[ID][1];
 
-            Console.WriteLine(locationDescription);
             Console.WriteLine($"You are at: {locationName} From here you can go:");
             
             Console.WriteLine();
