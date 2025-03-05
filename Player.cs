@@ -1,24 +1,24 @@
-using KeyboardMenu;
+// using KeyboardMenu;
 
-public class Player
-{
+public class Player{
     public string Name;
     public int CurrentHitPoints;
     public int MaximumHitPoints;
     // public Weapon CurrentWeapon;
     public Location? CurrentLocation;
+    public Action? PlayerDeath;
 
-    public Player(string name, Game gameInstance){
+    public Player(string name){
         Name = name;
         CurrentHitPoints = 30;
         MaximumHitPoints = 30;
         // this.CurrentWeapon = CurrentWeapon; //starts with rusty sword
         // this.CurrentLocation = CurrentLocation; //starts at your house
-        game = gameInstance;
     }
 
     public void DamagePlayer(int damageAmount){
         CurrentHitPoints = Math.Max(0, CurrentHitPoints - damageAmount);
+        CheckPlayerHealth();
     }
 
     public void HealPlayer(int healAmount){
@@ -27,11 +27,19 @@ public class Player
         // Console.WriteLine("Please enter your name");
         // string name = Console.ReadLine();
         // Player player = new Player(name);
-
-    private void CheckPlayerHealth(){
-        if(CurrentHitPoints <= 0){
+    
+    private void CheckPlayerHealth()
+    {
+        if (CurrentHitPoints <= 0)
+        {
             Console.WriteLine("You have died");
-            Game.OnPlayerDeath();
+
+            if (PlayerDeath == null)
+            {
+                Console.WriteLine("error: PlayerDeath event is null");
+            }
+
+            PlayerDeath?.Invoke();
         }
     }
     public void MoveToLocation(Location? location){

@@ -1,10 +1,11 @@
 using System.Security.Cryptography;
 
-namespace KeyboardMenu;
+namespace KeyboardMenu
+{
 
 public class Game
-    {
-        protected Player CurrentPlayer;
+{
+        protected Player? CurrentPlayer;
         protected World CurrentWorld;
         protected Menu MainMenu;
         public bool IntroductionPlayed = false;
@@ -12,7 +13,8 @@ public class Game
         public Game()
         {
             CurrentWorld = new();
-            CurrentPlayer = new Player("Player", this);
+            CurrentPlayer = new Player("Player");
+            CurrentPlayer.PlayerDeath += OnPlayerDeath;
 
             // set player current location
             CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
@@ -42,13 +44,16 @@ public class Game
         private void StartGame()
         {
             Playing = true;
+            string PlayerName = "Player";
 
             // play the introduction of the game and ask for the name of the player
-            if(IntroductionPlayed == false)
+            if(!IntroductionPlayed)
             {
-                Introduction();
+                PlayerName = AskForPlayerName();
                 IntroductionPlayed = true;
             }
+            CurrentPlayer = new Player(PlayerName);
+            CurrentPlayer.PlayerDeath += OnPlayerDeath;
 
             while(Playing)
             {
@@ -83,7 +88,7 @@ public class Game
             Start(); // return to menu
         }
 
-        public void OnPlayerDeath()
+        private void OnPlayerDeath()
         {
             Console.Clear();
             Console.WriteLine("You have fallen in battle...");
@@ -95,6 +100,7 @@ public class Game
 
             Console.WriteLine("Press any key to return to menu...");
             Console.ReadKey(true);
+            Playing = false;
             Start(); // return to menu
         }
 
@@ -114,7 +120,8 @@ public class Game
             Environment.Exit(0);
         }
 
-        public static void Introduction()
+        // public static void Introduction()
+        private string AskForPlayerName()
         {
             Console.Clear();
             
@@ -167,5 +174,7 @@ public class Game
 
             Console.WriteLine("\nPress any key to continue:");
             Console.ReadLine();
+            return playerName;
         }
     }
+}
