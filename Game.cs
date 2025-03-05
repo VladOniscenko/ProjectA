@@ -147,6 +147,7 @@ public class Game
                 }
             }
 
+            
             Thread.Sleep(sleepTime);
             Console.WriteLine($"Remember your name, {playerName}—for the path ahead is long and perilous.");
             Thread.Sleep(sleepTime);
