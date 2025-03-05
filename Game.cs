@@ -201,31 +201,21 @@ public class Game
         
         if (quest.IsCompleted)
         {
-            
-            if (quest.IsCompleted)
-            {
-                // add logic of give a reward to player
-                    
-                //
+            Console.WriteLine($"You defeated the {monster.Name}s!");
 
-                Console.WriteLine($"You defeated the {monster.Name}s!");
-
-                if(quest.Reward != null){
-                    Console.WriteLine($"The {monster.Name} left behind a {quest.Reward.Name}...");
-                    Console.WriteLine($"Will you equip the {quest.Reward.Name}? y/n");
-                    string? accepted = Console.ReadLine()?.Trim().ToUpper();
-                    while (accepted != "Y" && accepted != "N");
-                    if (accepted == "Y")
-                    {
-                        CurrentPlayer.CurrentWeapon = quest.Reward;
-                    }
-
+            if(quest.Reward != null){
+                Console.WriteLine($"The {monster.Name} left behind a {quest.Reward.Name}...");
+                Console.WriteLine($"Will you equip the {quest.Reward.Name}? y/n");
+                string? accepted = Console.ReadLine()?.Trim().ToUpper();
+                while (accepted != "Y" && accepted != "N");
+                if (accepted == "Y")
+                {
+                    CurrentPlayer.CurrentWeapon = quest.Reward;
                 }
-                
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey(true);
-                
             }
+                
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey(true);
         }
     }
     
