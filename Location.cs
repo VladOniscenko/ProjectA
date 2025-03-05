@@ -31,7 +31,7 @@ public class Location
             bool south = LocationToSouth is not null;
             bool west = LocationToWest is not null;
             string locationName = Name;
-            var defaultColor = Console.ForegroundColor
+            var defaultColor = Console.ForegroundColor;
 
             char[,] miniMap = {
             { ' ', ' ', ' ', ' ', 'P', ' ', ' ', ' ' },
