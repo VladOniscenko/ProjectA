@@ -15,10 +15,6 @@ public class Game
         string prompt = "Please select an option:";
         Dictionary<char, string> options = new ()
         {
-
-            CurrentWorld = new();
-            CurrentPlayer = new("Player", World.WeaponByID(1));
-
             {'P', "Play"},
             {'A', "About"},
             {'Q', "Quit"}
@@ -47,7 +43,7 @@ public class Game
         Playing = true;
         
         CurrentWorld = new();
-        CurrentPlayer = new("Player");
+        CurrentPlayer = new("Player", World.WeaponByID(1));
 
         // set player current location
         CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
@@ -205,8 +201,6 @@ public class Game
         
         if (quest.IsCompleted)
         {
-            Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
-            Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
             
             if (quest.IsCompleted)
             {
