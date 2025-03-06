@@ -136,7 +136,7 @@ public class Game
 
         string[] storyLines = new string[]
         {
-            $"Remember your name, {playerName}—for the path ahead is long and perilous.",
+            $"Remember your name, {playerName}, for the path ahead is long and perilous.",
             "The town of Aincrad lives in fear.",
             "Giant spiders lurk within the village gates.",
             "At night, they creep in, taking livestock—and worse.",
