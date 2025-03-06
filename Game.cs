@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
@@ -188,6 +189,7 @@ public class Game
         
         public void Fight()
         {
+            int monsterCount = 0;
             Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
             Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
 
@@ -207,7 +209,7 @@ public class Game
                 {
                     case 'E':
                         Console.WriteLine("Start the battle");
-                        battleTurn(monster);
+                        battleTurn(monster, quest, monsterCount);
                         break;
                     case 'F':
                         Console.WriteLine("Flee");
@@ -217,9 +219,10 @@ public class Game
             }
         }
 
-        public void battleTurn(Monster currentMonster)
-        {   
-            int monsterCount;
+        public void battleTurn(Monster currentMonster, Quest currentQuest, int monsterCount)
+        {
+            monsterCount++;
+            bool whileFighting = true;
             Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
 
             Dictionary<char, string> battleOptionList = new()
@@ -236,34 +239,23 @@ public class Game
                 {'N', "No"},
             };
 
-
+            
             Menu battleMenu = new("What will be your next move?", battleOptionList);
-            Menu continueMenu = new($"You killed the {currentMonster.Name}, But the next came. \n Will you continue?", continueOptionList);
-        if (quest.IsCompleted == false)
-        {
-            for (monsterCount = 1; monsterCount < 3 ;)
-                {
-                    while(currentMonster.CurrentHitPoints > 0)
+            Menu continueMenu = new($"You killed the {currentMonster.Name}, But the next came. \n Will you continue? \n {monsterCount} ", continueOptionList);
+                    while(whileFighting == true)
                     {
+
                         switch(battleMenu.Run())
                         {
                             case 'A':
                             currentMonster.damageMonster(1);// adjust when weapon is made
                             Console.WriteLine($"You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
-                            Thread.Sleep(1000);
-                            monsterTurn();
-                            if (currentMonster.CurrentHitPoints >= 0)
+                            if (currentMonster.CurrentHitPoints > 0)
                             {
-                                switch(continueMenu.Run())
-                                {
-                                    case 'Y':
-                                    monsterCount++;
-                                    break;
-                                    case 'N':
-                                    // go out the fight
-                                    break;
-                                }
+                                monsterTurn();
                             }
+                            Thread.Sleep(1000);
+                            
                             break;
                             case 'H':
                             CurrentPlayer.HealPlayer(3);
@@ -272,7 +264,7 @@ public class Game
                             monsterTurn();
                             break;
                             case 'T':
-                            Console.WriteLine("Snakes cant talk...");
+                            Console.WriteLine($"{currentMonster.Name}s cant talk...");
                             Thread.Sleep(1000);
                             monsterTurn();
                             break;
@@ -280,20 +272,55 @@ public class Game
                             // canceling the quest
                             break;
                         }
-                    }
-                }
-            }
-            quest.IsCompleted = true;
-        }
- 
+                    
+                        if (currentMonster.CurrentHitPoints == 0 )
+                        {
+                           
+                            if (monsterCount == 3 && CurrentPlayer.CurrentHitPoints > 0)
+                            {   
+                                Console.WriteLine("You completed the quest");
+                                whileFighting = false;
+                                quest.IsCompleted = true;
+                            }
+                            else
+                            {
+                                switch(continueMenu.Run())
+                                {
+                                    case 'Y':
+                                    currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
+                                    
+                                    Console.WriteLine($"{monsterCount}");
+                                    Thread.Sleep(1000);
+                                    battleTurn(currentMonster, currentQuest, monsterCount);
+                                    break;
+                                    case 'N':
+                                    currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
+                                    
+                                    // go out the fight
+                                    break;
+                                }
 
+                            }
+
+                            
+                        }
+
+                        if (CurrentPlayer.CurrentHitPoints == 0 )
+                            { 
+                                Console.WriteLine("you died restart the game");
+                                // restart the whole game
+                                break;
+                            }
+                        
+                    }
+            }
         public void monsterTurn()
         {
-            Console.WriteLine("Now its the snake its turn");
+            Console.WriteLine($"Now its the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} its turn");
             CurrentPlayer.DamagePlayer(CurrentPlayer.CurrentLocation.MonsterLivingHere.MaximumDamage);
             Thread.Sleep(1000);
 
-            Console.WriteLine($"The snake attack you, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
+            Console.WriteLine($"The {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} attack you, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
             Thread.Sleep(1000);
         }
 
