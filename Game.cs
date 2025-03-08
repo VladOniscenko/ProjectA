@@ -52,7 +52,7 @@ public class Game
             // play the introduction of the game and ask for the name of the player
             if(IntroductionPlayed == false)
             {
-                Introduction();
+                //Introduction();
                 IntroductionPlayed = true;
             }
 
@@ -221,9 +221,9 @@ public class Game
 
         public void battleTurn(Monster currentMonster, Quest currentQuest, int monsterCount)
         {
-            monsterCount++;
             bool whileFighting = true;
             Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+
 
             Dictionary<char, string> battleOptionList = new()
             {
@@ -269,18 +269,20 @@ public class Game
                             monsterTurn();
                             break;
                             case 'F':
-                            // canceling the quest
+                            StartGame();
                             break;
                         }
                     
                         if (currentMonster.CurrentHitPoints == 0 )
                         {
-                           
-                            if (monsterCount == 3 && CurrentPlayer.CurrentHitPoints > 0)
+                           monsterCount++;
+                            if (monsterCount > 2)
                             {   
-                                Console.WriteLine("You completed the quest");
-                                whileFighting = false;
                                 quest.IsCompleted = true;
+                                CheckIfFightWon();
+                                StartGame();
+                                break;
+
                             }
                             else
                             {
@@ -295,8 +297,7 @@ public class Game
                                     break;
                                     case 'N':
                                     currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
-                                    
-                                    // go out the fight
+                                    StartGame();
                                     break;
                                 }
 
