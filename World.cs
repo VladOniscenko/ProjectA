@@ -9,7 +9,7 @@ public class World
 
     public const int WEAPON_ID_RUSTY_SWORD = 1;
     public const int WEAPON_ID_CLUB = 2;
-    public const int WEAPON_ID_GREAT_SWORD = 3;
+    public const int WEAPON_ID_GREATSWORD = 3;
 
     public const int MONSTER_ID_RAT = 1;
     public const int MONSTER_ID_SNAKE = 2;
@@ -28,6 +28,7 @@ public class World
     public const int LOCATION_ID_FARM_FIELD = 7;
     public const int LOCATION_ID_BRIDGE = 8;
     public const int LOCATION_ID_SPIDER_FIELD = 9;
+    public const string WILLAGE_NAME = "Aincrad";
 
     static World()
     {
@@ -41,7 +42,7 @@ public class World
     {
         Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 5));
         Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Club", 10));
-        Weapons.Add(new Weapon(WEAPON_ID_GREAT_SWORD, "GREAT SWORD", 15));
+        Weapons.Add(new Weapon(WEAPON_ID_GREATSWORD, "Greatsword", 15));
     }
 
     public static void PopulateMonsters()
@@ -58,7 +59,7 @@ public class World
     public static void PopulateQuests()
     {
         Quest clearAlchemistGarden = new Quest(QUEST_ID_CLEAR_ALCHEMIST_GARDEN, "Clear the alchemist's garden", "Those rats art nibbling on mine own h'rbs! I couldst very much useth an adventur'r to taketh careth of those folk …", 3, WeaponByID(WEAPON_ID_CLUB));
-        Quest clearFarmersField = new Quest(QUEST_ID_CLEAR_FARMERS_FIELD, "Clear the farmer's field", "I can't w'rk mine own landeth with those pesky snakes slith'ring 'round! Shall thee holp me?", 3, WeaponByID(WEAPON_ID_GREAT_SWORD));
+        Quest clearFarmersField = new Quest(QUEST_ID_CLEAR_FARMERS_FIELD, "Clear the farmer's field", "I can't w'rk mine own landeth with those pesky snakes slith'ring 'round! Shall thee holp me?", 3, WeaponByID(WEAPON_ID_GREATSWORD));
         Quest clearSpidersForest = new Quest(QUEST_ID_COLLECT_SPIDER_SILK, "Collect spider silk", "Kill spiders in the spider forest", 4);
         
         Quests.Add(clearAlchemistGarden);

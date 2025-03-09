@@ -31,10 +31,53 @@ public class Location
             bool south = LocationToSouth is not null;
             bool west = LocationToWest is not null;
             string locationName = Name;
-            string locationDescription = Description;
+            var defaultColor = Console.ForegroundColor;
 
-            Console.WriteLine(locationDescription);
+            char[,] miniMap = {
+            { ' ', ' ', ' ', ' ', 'P', ' ', ' ', ' ' },
+            { ' ', ' ', ' ', ' ', 'A', ' ', ' ', ' ' },
+            { ' ', ' ', 'V', 'F', 'T', 'G', 'B', 'S' },
+            { ' ', ' ', ' ', ' ', 'H', ' ', ' ', ' ' }
+            };
+
+            var coordinates = new Dictionary<int, int[]>{
+                {1, [4, 3]},
+                {2, [4, 2]},
+                {3, [5, 2]},
+                {4, [4, 1]},
+                {5, [4, 0]},
+                {6, [3, 2]},
+                {7, [2, 2]},
+                {8, [6, 2]},
+                {9, [7, 2]}
+            };
+
+            int currentX = coordinates[ID][0];
+            int currentY = coordinates[ID][1];
+
             Console.WriteLine($"You are at: {locationName} From here you can go:");
+            
+            Console.WriteLine();
+
+            for (int i = 0; i < miniMap.GetLength(0); i++)
+            {
+                for (int j = 0;j < miniMap.GetLength(1); j++)
+                {
+                    if (j == currentX && i == currentY)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(miniMap[i, j]); 
+                        Console.ForegroundColor = defaultColor; 
+                    }
+                    else
+                    {
+                        Console.Write(miniMap[i, j]);
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
             if (north)
             {
                 Console.WriteLine("    N");
