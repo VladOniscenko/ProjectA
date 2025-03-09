@@ -7,12 +7,15 @@ public class Player
     public int MaximumHitPoints;
     public Weapon CurrentWeapon;
     public Location CurrentLocation;
+    public List<Weapon> items;
 
     public Player(string name, Weapon currentWeapon){
         Name = name;
         CurrentHitPoints = 30;
         MaximumHitPoints = 30;
         CurrentWeapon = currentWeapon;
+        items = new List<Weapon>();
+        items.Add(currentWeapon);
         // this.CurrentLocation = CurrentLocation; //starts at your house
     }
 

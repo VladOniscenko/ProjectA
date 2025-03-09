@@ -82,6 +82,12 @@ public class Game
                 continue;
             }
 
+            if(whereToGo == "items")
+            {
+                CheckInventory();
+                continue;
+            }
+
             // move the player to the location by direction
             CurrentPlayer.MoveTo(whereToGo);
         }
@@ -302,6 +308,55 @@ public class Game
             }
         }
     }
+
+        public void CheckInventory(){
+        Console.WriteLine("You have the following items in your inventory:");
+        for (int i = 1; i < CurrentPlayer.items.Count + 1; i++){
+            Console.WriteLine($"{i}. {CurrentPlayer.items[i -1].Name}");
+        }
+
+
+        int input = -1;
+        while (true)
+        {
+            Console.WriteLine("Select an item");
+            string? userInput = Console.ReadLine()?.Trim();
+
+
+            if (!int.TryParse(userInput, out input) || input > CurrentPlayer.items.Count)
+            {
+                Console.WriteLine("Invalid input. Please enter a number between 1 and " + CurrentPlayer.items.Count + ".");
+                continue;
+            }
+            input--;
+            break;
+        }
+        Weapon chosenWeapon = CurrentPlayer.items[input];
+        String inventoryPrompt = "Wat would you like to do?";
+        Dictionary<char, string> inventoryOptions = new(){
+            {'S', "See item stats"},
+            {'E', "Equip item"},
+            {'Q', "Exit inventory"}
+        };
+        Menu inventoryMenu = new Menu(inventoryPrompt, inventoryOptions);
+        switch (inventoryMenu.Run())
+            {
+                case 'S':
+                    chosenWeapon.ShowStats();
+                    CheckInventory();
+                    break;
+                case 'E':
+                    CurrentPlayer.CurrentWeapon = chosenWeapon;
+                    Console.WriteLine($"You have equipped the {chosenWeapon.Name}");
+                    Thread.Sleep(2000);
+                    break;
+                case 'Q':
+                    break;
+            }
+
+
+    }
+
     
 
     public void CheckForActions()
