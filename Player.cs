@@ -2,6 +2,7 @@ using ProjectA;
 
 public class Player
 {
+    public static Player Instance { get; private set; } // Singleton Pattern for better or worse ;)  
     public string Name;
     public int CurrentHitPoints;
     public int MaximumHitPoints;
@@ -14,6 +15,8 @@ public class Player
         MaximumHitPoints = 30;
         CurrentWeapon = currentWeapon;
         // this.CurrentLocation = CurrentLocation; //starts at your house
+
+        Instance = this;
     }
 
     public void DamagePlayer(int damageAmount){
@@ -31,6 +34,10 @@ public class Player
             Console.ReadKey(true);
             // Start(); // return to menu
         }
+    }
+
+    public void DisplayHealth(){
+        Console.WriteLine($"{Name}'s health: {CurrentHitPoints} / {MaximumHitPoints}");
     }
 
     public void MoveToLocation(Location? location){
