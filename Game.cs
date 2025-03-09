@@ -341,99 +341,108 @@ public class Game
     public void Guard()
     {
         Console.Clear();
+        // Set variables
+        bool guardFinished = false;
         int sleepTime = 1000;
         
-        // Dialogue when player arrives at Guard's Post
         Thread.Sleep(sleepTime);
         Console.WriteLine("You wish to pass the post? You must have proof of your grith.");
         Thread.Sleep(sleepTime);
         Console.WriteLine("Only then, shall I grant you permission to continue forward.");
         Thread.Sleep(sleepTime);
-
-        bool guardFinished = false;
-
-        while (!guardFinished)
+        
+        string yesOrNo;
+        while (true)
         {
             Console.WriteLine("Have you completed both quests from the farmer's field and the alchemist's garden?");
             Thread.Sleep(sleepTime);
             Console.WriteLine("(Y/N)");
-            string yesOrNo = Console.ReadLine();
+            yesOrNo = Console.ReadLine().ToUpper();
 
-            // Check if input is valid
-            if (!(yesOrNo is "Y" or "N"))
+            if (yesOrNo != "Y" && yesOrNo != "N")
             {
-                Console.WriteLine("What was that? I couldn't quite understand. Speak up!");
+                Console.WriteLine("What was that?");
+                continue;   // Continues the loop
             }
-            else if (yesOrNo is "N")
+            else if (yesOrNo == "N")
             {
-                Console.WriteLine("Then turn back at once! You have no proof of your grit.");
-                guardFinished = true; // Break the loop
+                Console.WriteLine("Then turn back at once! You have no proof of your grit");
+                return;     // Exits method
             }
-            // Input is valid -> Check if answered truthfully
-            else
-            {   
-                Quest quest1 = World.QuestByID(World.QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
-                Quest quest2 = World.QuestByID(World.QUEST_ID_CLEAR_FARMERS_FIELD);
+            break;      // Exits loop
+        }
+
+        Quest quest1 = World.QuestByID(World.QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
+        Quest quest2 = World.QuestByID(World.QUEST_ID_CLEAR_FARMERS_FIELD);
                 
-                // Block of code to check if user has really completed prior two quests.
-                if (!(quest1.IsCompleted && quest2.IsCompleted))
+        if (!quest1.IsCompleted || !quest2.IsCompleted)
+        {
+            Console.WriteLine("I can see beneath your lies. Turn back at once!");
+            return;
+        }
+        else if (quest1.IsCompleted && quest2.IsCompleted)
+        {   
+            string[] guardLines = new string[]
+        {
+            "I see the truth in your eyes.",
+            "We shall play a number game. I’ll think of a number between 1 and 10.",
+            "You have 3 tries to guess it.",
+            "If you fail, you may try again. If you succeed, you shall pass!",
+        };
+        
+        PrintWithPause(guardLines);
+
+        Console.Clear();    // Clears the console screen. Useful!
+
+        while (!PassedGuard)
+        {
+            // Generate random number between 0 and 11
+            Random randInt = new Random();
+            int num = randInt.Next(1, 11);
+            int currAttempts = 0;
+            int maxAttempts = 3;
+
+            while (maxAttempts > currAttempts)
+            {
+                Console.WriteLine("Guess the number between 1 and 10.");
+                if (!int.TryParse(Console.ReadLine(), out int guessedNum))
                 {
-                    Console.WriteLine("I can see beneath your lies. Turn back at once!");
-                    guardFinished = true;
+                    Console.WriteLine("Invalid guess! Try again.");
+                    continue;
                 }
-                else
-                {   
-                    Console.WriteLine("I can see you speak the truth. It is in your eyes.");
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("We shall play a number game. I will think of a number between and including 1 and 10");
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("You must guess the number in my mind. You have 3 tries to get it right!");
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("Should you fail all 3 chances, you will try again.");
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("Should your resolve not waver, you shall pass this test!");
-                    Thread.Sleep(sleepTime);
-
-                    bool validGame = false;
-                    do
-                    {
-                        // Generate random number between 0 and 11
-                        Random randInt = new Random();
-                        int num = randInt.Next(1, 11);
-
-                        int maxAttempts = 3;
-                        while (maxAttempts > 0)
-                        {
-                            // Ask to guess a number between 0 and 10
-                            Console.WriteLine("Guess the number between 1 and 10.");
-                            int guessedNum = Convert.ToInt32(Console.ReadLine());
-
-                            // Check attempt
-                            if (guessedNum == num)
-                            {
-                                Console.WriteLine("Correct! You may pass the gate.");
-                                PassedGuard = true;
-                                validGame = true;
-                                guardFinished = true;
-                                break;
-                            }
-                            else
-                            {
-                                maxAttempts--;
-                                if (maxAttempts > 0);
-                                {
-                                    Console.WriteLine($"Wrong. {maxAttempts} attempts left. Try again!");
-                                }
-                            }
-                        }
-
-                        if (!validGame)
-                        {
-                            Console.WriteLine("You have used up all your tries. You lack conviction. Try again!");
-                        }
-                    }
-                    while (!validGame);
+                if (guessedNum == num)
+                {
+                    Console.WriteLine("Correct! You may now pass the gate");
+                    PassedGuard = true;
+                    break;
                 }
-        }}
+
+                currAttempts++;
+                Console.WriteLine($"Incorrect. You have {3 - currAttempts} attempts left!");
+            }
+
+            if (!PassedGuard)
+            {
+            Console.Clear();
+            Console.WriteLine("You failed to guess the number in 3 tries. You lack conviction!");
+            Thread.Sleep(sleepTime);
+            while (true)
+            {
+                Console.WriteLine("Do you wish to try again?");
+                Thread.Sleep(sleepTime);
+                Console.WriteLine("Y/N");
+                string noOrYes = Console.ReadLine().ToUpper();
+                if (noOrYes != "Y" && noOrYes != "N")
+                {
+                    Console.WriteLine("What was that?");
+                    continue;
+                }
+                if (noOrYes == "N")
+                {
+                    return;
+                }
+                break;
+            }     
+        }
     }
-}
+}}}
