@@ -314,27 +314,24 @@ public class Game
     {
         Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
         Monster currentMonster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
-        Menu battleMenu = new("What will be your next move?", BattleOptionList);
-        
+        currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
+
         Console.Clear();
-        Console.WriteLine($"U need to kill {quest.AmountOfMonstersToKill} {currentMonster.Name}'s");
-        Console.WriteLine();
+        Console.WriteLine($"U see {quest.AmountOfMonstersToKill} {currentMonster.Name}'s u need to kill them!");
 
         int round = 1;
         while (round <= quest.AmountOfMonstersToKill)
         {
-            Console.WriteLine();
-            
-            currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
-            switch(battleMenu.Run(false))
+            Menu battleMenu = new($"Monster {round}/{quest.AmountOfMonstersToKill}: {currentMonster.CurrentHitPoints} HP of {currentMonster.MaximumHitPoints}\n{CurrentPlayer.GetHealth()}\nWhat will be your next move?", BattleOptionList);
+            switch(battleMenu.Run())
             {
                 case 'A':
                     currentMonster.damageMonster(CurrentPlayer.CurrentWeapon.Damage);
-                    Console.WriteLine($"Monster {round}: You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
+                    Console.WriteLine($"You attack the {currentMonster.Name}");
                     break;
                 case 'H':
                     CurrentPlayer.HealPlayer(3);
-                    Console.WriteLine($"You healed yourself, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
+                    Console.WriteLine($"You healed yourself");
                     break;
                 case 'T':
                     Console.WriteLine($"{currentMonster.Name}s cant talk...");
@@ -348,6 +345,7 @@ public class Game
             {
                 round++;
                 Console.WriteLine($"U killed {currentMonster.Name}");
+                currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
                 continue;
             }
 
@@ -359,10 +357,9 @@ public class Game
                 Start();
             }
             
-            Console.WriteLine($"Your current quest progression: {round}/{quest.AmountOfMonstersToKill}");
-            Thread.Sleep(1000);
-            
             Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         quest.IsCompleted = true;
@@ -371,11 +368,8 @@ public class Game
     }
     public void MonsterTurn()
     {
-        Console.WriteLine($"Now its the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} its turn");
+        Console.WriteLine($"{CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} attacked you");
         CurrentPlayer.DamagePlayer(CurrentPlayer.CurrentLocation.MonsterLivingHere.MaximumDamage);
-        Thread.Sleep(1000);
-
-        Console.WriteLine($"The {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} attack you, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
         Thread.Sleep(1000);
     }
     

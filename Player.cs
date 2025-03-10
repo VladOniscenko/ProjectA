@@ -40,7 +40,12 @@ public class Player
     }
 
     public void DisplayHealth(){
-        Console.WriteLine($"{Name}'s health: {CurrentHitPoints} / {MaximumHitPoints}");
+        Console.WriteLine(GetHealth());
+    }
+
+    public string GetHealth()
+    {
+        return $"{Name}'s health: {CurrentHitPoints} HP of {MaximumHitPoints}";
     }
 
     public void MoveToLocation(Location? location){

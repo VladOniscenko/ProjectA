@@ -53,15 +53,12 @@ namespace ProjectA
             ResetColor();
         }
 
-        public char Run(bool clear = true)
+        public char Run()
         {
             ConsoleKey keyPressed;
             do
             {
-                if (clear)
-                {
-                    Console.Clear();
-                }
+                Console.Clear();
 
                 DisplayOptions();
                 ConsoleKeyInfo keyInfo = ReadKey(true);
