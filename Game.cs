@@ -279,22 +279,121 @@ public class Game
 
     public void Fight()
     {
-        Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
-        Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
+            int monsterCount = 0;
+            Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
 
-        // set IsCompleted to true if won
-
-        Console.Clear();
-        while (true)
-        {
-            // remove this below and write fight logic
-            Console.WriteLine("You are in a fight");
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey(true);
-            break;
+            Console.Clear();
+            
+            Dictionary<char, string> encounterOptionsList = new()
+            {
+                { 'E', $"Engage battle with the {monster.Name}." },
+                { 'F', $"Flee from the {monster.Name}." }
+            };
+            
+            Menu encounterMenu = new($"You encounterd a {monster.Name}!", encounterOptionsList );
+            switch (encounterMenu.Run())
+{
+                case 'E':
+                    Console.WriteLine("Start the battle");
+                    battleTurn(monster, monsterCount);
+                    break;
+                case 'F':
+                    Console.WriteLine("You succesfully ran away");
+                    Thread.Sleep(1000);
+                    break;
+            }
         }
-    }
 
+    public Dictionary<char, string> battleOptionList = new()
+            {
+                {'A', $"Attack"},
+                {'H', "Heal yourself"},
+                {'T', "Try to talk it out ¯\\_(ツ)_/¯ "},
+                {'F', "Flee (This will cancel the quest)"}
+            };
+
+    public Dictionary<char, string> continueOptionList = new()
+            {
+                {'Y', "Yes"},
+                {'N', "No"},
+            };
+    public void battleTurn(Monster currentMonster, int monsterCount)
+    {
+        Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
+        
+        Menu battleMenu = new("What will be your next move?", battleOptionList);
+
+        bool Flee = false;
+        
+        while(!quest.IsCompleted || Flee == false )
+        {
+            switch(battleMenu.Run())
+            {
+                case 'A':
+                    currentMonster.damageMonster(CurrentPlayer.CurrentWeapon.Damage
+                    );// adjust when weapon is made
+                    Console.WriteLine($"You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
+                    if (currentMonster.CurrentHitPoints > 0)
+                    {
+                        monsterTurn();
+                    }
+                    Thread.Sleep(1000);
+                    break;
+                case 'H':
+                    CurrentPlayer.HealPlayer(3);
+                    Console.WriteLine($"You healed yourself, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
+                    Thread.Sleep(1000);
+                    monsterTurn();
+                    break;
+                case 'T':
+                    Console.WriteLine($"{currentMonster.Name}s cant talk...");
+                    Thread.Sleep(1000);
+                    monsterTurn();
+                    break;
+                case 'F':
+                    Flee = true;
+                    break;
+            }
+            
+            if (Flee == true)
+            {
+                break;
+            }
+        
+            if (currentMonster.CurrentHitPoints == 0 )
+            {
+               monsterCount++;
+                if (monsterCount == quest.AmountOfMonstersToKill)
+                {   
+                    quest.IsCompleted = true;
+                    CheckIfFightWon();
+                }
+
+                Console.Clear();
+                Console.WriteLine($"Your current quest progression: {monsterCount}/{quest.AmountOfMonstersToKill}");
+                Thread.Sleep(1000);
+                currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
+                battleTurn(currentMonster, monsterCount);
+                
+            }
+
+            if (CurrentPlayer.CurrentHitPoints == 0 )
+            { 
+                Console.WriteLine("you died restart the game");
+                Start();
+            }
+        }     
+    }
+public void monsterTurn()
+        {
+            Console.WriteLine($"Now its the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} its turn");
+            CurrentPlayer.DamagePlayer(CurrentPlayer.CurrentLocation.MonsterLivingHere.MaximumDamage);
+            Thread.Sleep(1000);
+
+            Console.WriteLine($"The {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} attack you, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
+            Thread.Sleep(1000);
+        }
+    
     public void TalkToNpc()
     {
         if (CurrentPlayer.CurrentLocation.QuestAvailableHere != null &&
@@ -391,7 +490,8 @@ public class Game
 
         if (CurrentPlayer.CurrentLocation.MonsterLivingHere != null &&
             CurrentPlayer.CurrentLocation.FightAvailableHere != null &&
-            CurrentPlayer.CurrentLocation.FightAvailableHere.AcceptedByPlayer)
+            CurrentPlayer.CurrentLocation.FightAvailableHere.AcceptedByPlayer && !CurrentPlayer.CurrentLocation.FightAvailableHere.IsCompleted)
+            
         {
             actionOptionsList.Add('F', $"Fight the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name}");
         }
@@ -412,7 +512,6 @@ public class Game
                     break;
                 case 'F':
                     Fight();
-                    CheckIfFightWon();
                     break;
             }
         }
