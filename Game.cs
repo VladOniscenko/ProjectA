@@ -28,6 +28,7 @@ public class Game
         switch (MainMenu.Run())
         {
             case 'P':
+                Guard();
                 StartGame();
                 break;
             case 'A':
@@ -48,28 +49,28 @@ public class Game
 
         // set player current location
         CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
-        
+
         // play the introduction of the game and ask for the name of the player
-        if(IntroductionPlayed == false)
+        if (IntroductionPlayed == false)
         {
             Introduction();
             IntroductionPlayed = true;
         }
 
-        while(Playing)
+        while (Playing)
         {
             /*
                 Write the current possible options below (fight, quest, etc)
             */
-            
+
             // check if location has quest available to accept or go in a fight if quest was accepted
             CheckForActions();
-            
+
 
             /*
                 Write the current possible options above (fight, quest, etc)
             */
-            
+
             // display health
             CurrentPlayer.DisplayHealth();
 
@@ -79,13 +80,13 @@ public class Game
 
             // ask the player where they want to go
             string? whereToGo = Console.ReadLine();
-            if(whereToGo == "exit")
+            if (whereToGo == "exit")
             {
                 Playing = false;
                 continue;
             }
 
-            if(whereToGo == "items")
+            if (whereToGo == "items")
             {
                 CheckInventory();
                 continue;
@@ -103,7 +104,7 @@ public class Game
         Console.Clear();
         Console.WriteLine("Welcome to Our Console Game!");
         Console.WriteLine("Developed by CookieBytes for Sharkshark\n");
-    
+
         List<string> collaborators = new List<string>
         {
             "Vladislav Oniscenko",
@@ -121,22 +122,26 @@ public class Game
             collaborators[i] = collaborators[j];
             collaborators[j] = temp;
         }
-        
+
         Console.WriteLine("Collaborators:");
         foreach (var collaborator in collaborators)
         {
             Console.WriteLine($"- {collaborator}");
         }
+
         Console.WriteLine();
 
         Console.WriteLine("About CookieBytes:");
         Console.WriteLine("At CookieBytes, we specialize in crafting innovative and engaging gaming experiences.");
-        Console.WriteLine("Whether it's creating original concepts or bringing your favorite ideas to life, our goal is to push the boundaries of game development.");
-        Console.WriteLine("We are a passionate team committed to providing high-quality entertainment that resonates with gamers of all kinds.\n");
+        Console.WriteLine(
+            "Whether it's creating original concepts or bringing your favorite ideas to life, our goal is to push the boundaries of game development.");
+        Console.WriteLine(
+            "We are a passionate team committed to providing high-quality entertainment that resonates with gamers of all kinds.\n");
 
         Console.WriteLine("Thank you for playing our game!");
-        Console.WriteLine("We hope you enjoy the adventure and look forward to bringing more exciting projects in the future.");
-        
+        Console.WriteLine(
+            "We hope you enjoy the adventure and look forward to bringing more exciting projects in the future.");
+
         Console.WriteLine();
         Console.WriteLine("Press any key to return to menu...");
         Console.ReadKey(true);
@@ -153,7 +158,7 @@ public class Game
     public void Introduction()
     {
         Console.Clear();
-        
+
         int sleepTime = 1000;
         Console.WriteLine("The winds whisper of a hero destined to rise.");
         Thread.Sleep(sleepTime);
@@ -192,10 +197,10 @@ public class Game
             "Some say only in the darkest battles does fate reveal its chosen blade.",
             $"Step forward, take up your weapon, and become the hero {World.WILLAGE_NAME} needs, {playerName}."
         };
-        
+
         PrintWithPause(storyLines);
     }
-    
+
     public void PlayerWon()
     {
         int sleepTime = 1000;
@@ -212,17 +217,18 @@ public class Game
             $"You are the hero of {World.WILLAGE_NAME}.",
             $"\nCongratulations, {CurrentPlayer.Name}! You have won the game!"
         };
-        
+
         PrintWithPause(winMessages);
         ExitGame();
     }
-    
+
     public void CheckIfPlayerWonTheGame()
     {
-        if (CurrentPlayer.CurrentLocation.ID != World.LOCATION_ID_SPIDER_FIELD){
+        if (CurrentPlayer.CurrentLocation.ID != World.LOCATION_ID_SPIDER_FIELD)
+        {
             return;
         }
-        
+
         bool playerWon = true;
         foreach (Quest quest in World.Quests)
         {
@@ -238,39 +244,40 @@ public class Game
             PlayerWon();
         }
     }
-    
+
     public void CheckIfFightWon()
     {
         Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
         Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
-        
+
         if (quest.IsCompleted)
         {
             Console.WriteLine($"You defeated the {monster.Name}s!");
 
-            if(quest.Reward != null){
+            if (quest.Reward != null)
+            {
                 Console.WriteLine($"The {monster.Name} left behind a {quest.Reward.Name}...");
                 Console.WriteLine($"Will you equip the {quest.Reward.Name}? y/n");
                 string? accepted = Console.ReadLine()?.Trim().ToUpper();
-                while (accepted != "Y" && accepted != "N");
+                while (accepted != "Y" && accepted != "N") ;
                 if (accepted == "Y")
                 {
                     CurrentPlayer.CurrentWeapon = quest.Reward;
                 }
             }
-                
+
             Console.WriteLine("Press any key to continue");
             Console.ReadKey(true);
         }
     }
-    
+
     public void Fight()
     {
         Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
         Monster monster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
 
         // set IsCompleted to true if won
-        
+
         Console.Clear();
         while (true)
         {
@@ -281,7 +288,7 @@ public class Game
             break;
         }
     }
-    
+
     public void TalkToNpc()
     {
         if (CurrentPlayer.CurrentLocation.QuestAvailableHere != null &&
@@ -290,9 +297,9 @@ public class Game
             Quest quest = CurrentPlayer.CurrentLocation.QuestAvailableHere;
 
             Console.Clear();
-            
+
             Console.WriteLine(quest.QuestDescription);
-            
+
             Thread.Sleep(2000);
             Console.WriteLine(quest.QuestName);
 
@@ -302,7 +309,6 @@ public class Game
             {
                 Console.WriteLine("Will you accept the quest? Y/n");
                 accepted = Console.ReadLine()?.Trim().ToUpper();
-
             } while (accepted != "Y" && accepted != "N");
 
             if (accepted == "Y")
@@ -312,11 +318,13 @@ public class Game
         }
     }
 
-    public void CheckInventory(){
+    public void CheckInventory()
+    {
         Console.Clear();
         Console.WriteLine("You have the following items in your inventory:");
-        for (int i = 1; i < CurrentPlayer.items.Count + 1; i++){
-            Console.WriteLine($"{i}. {CurrentPlayer.items[i -1].Name}");
+        for (int i = 1; i < CurrentPlayer.items.Count + 1; i++)
+        {
+            Console.WriteLine($"{i}. {CurrentPlayer.items[i - 1].Name}");
         }
 
         int input = -1;
@@ -327,21 +335,24 @@ public class Game
 
             if (!int.TryParse(userInput, out input) || input > CurrentPlayer.items.Count)
             {
-                Console.WriteLine("Invalid input. Please enter a number between 1 and " + CurrentPlayer.items.Count + ".");
+                Console.WriteLine("Invalid input. Please enter a number between 1 and " + CurrentPlayer.items.Count +
+                                  ".");
                 continue;
             }
+
             input--;
             break;
         }
-        
+
         Weapon chosenWeapon = CurrentPlayer.items[input];
         String inventoryPrompt = "Wat would you like to do?";
-        Dictionary<char, string> inventoryOptions = new(){
-            {'S', "See item stats"},
-            {'E', "Equip item"},
-            {'Q', "Exit inventory"}
+        Dictionary<char, string> inventoryOptions = new()
+        {
+            { 'S', "See item stats" },
+            { 'E', "Equip item" },
+            { 'Q', "Exit inventory" }
         };
-        
+
         Menu inventoryMenu = new Menu(inventoryPrompt, inventoryOptions);
         switch (inventoryMenu.Run())
         {
@@ -359,32 +370,32 @@ public class Game
         }
     }
 
-    
 
     public void CheckForActions()
     {
         CheckIfPlayerWonTheGame();
 
-        Dictionary<char, string> actionOptionsList = new ();
-        
+        Dictionary<char, string> actionOptionsList = new();
+
         if (CurrentPlayer.CurrentLocation.QuestAvailableHere != null &&
             !CurrentPlayer.CurrentLocation.QuestAvailableHere.AcceptedByPlayer)
         {
             actionOptionsList.Add('T', $"Talk to {CurrentPlayer.CurrentLocation.QuestGiver}");
         }
-        
-        if (CurrentPlayer.CurrentLocation.MonsterLivingHere != null && 
+
+        if (CurrentPlayer.CurrentLocation.MonsterLivingHere != null &&
             CurrentPlayer.CurrentLocation.FightAvailableHere != null &&
             CurrentPlayer.CurrentLocation.FightAvailableHere.AcceptedByPlayer)
         {
             actionOptionsList.Add('F', $"Fight the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name}");
         }
-        
+
         if (actionOptionsList.Count > 0)
         {
             actionOptionsList.Add('W', "Walk by");
 
-            string prompt = $"{CurrentPlayer.CurrentLocation.Name} \n{CurrentPlayer.CurrentLocation.Description} \n\nPlease select an option:";
+            string prompt =
+                $"{CurrentPlayer.CurrentLocation.Name} \n{CurrentPlayer.CurrentLocation.Description} \n\nPlease select an option:";
             Menu actionMenu = new Menu(prompt, actionOptionsList);
             switch (actionMenu.Run())
             {
@@ -400,12 +411,12 @@ public class Game
             }
         }
     }
-    
+
     public static void PrintWithPause(string[] input)
     {
         bool stopPrinting = false;
         int index = 0;
-        
+
         Console.Clear();
 
         while (index < input.Length && !stopPrinting)
@@ -429,7 +440,7 @@ public class Game
             Console.WriteLine(input[index]);
             index++;
         }
-            
+
         Console.WriteLine("\nPress any key to continue:");
         Console.ReadLine();
     }
@@ -440,13 +451,13 @@ public class Game
         // Set variables
         bool guardFinished = false;
         int sleepTime = 1000;
-        
+
         Thread.Sleep(sleepTime);
         Console.WriteLine("You wish to pass the post? You must have proof of your grith.");
         Thread.Sleep(sleepTime);
         Console.WriteLine("Only then, shall I grant you permission to continue forward.");
         Thread.Sleep(sleepTime);
-        
+
         string yesOrNo;
         while (true)
         {
@@ -458,37 +469,38 @@ public class Game
             if (yesOrNo != "Y" && yesOrNo != "N")
             {
                 Console.WriteLine("What was that?");
-                continue;   // Continues the loop
+                continue; // Continues the loop
             }
-            else if (yesOrNo == "N")
+             
+            if (yesOrNo == "N")
             {
                 Console.WriteLine("Then turn back at once! You have no proof of your grit");
-                return;     // Exits method
+                return; // Exits method
             }
-            break;      // Exits loop
+
+            break; // Exits loop
         }
 
         Quest quest1 = World.QuestByID(World.QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
         Quest quest2 = World.QuestByID(World.QUEST_ID_CLEAR_FARMERS_FIELD);
-                
-        if (!quest1.IsCompleted || !quest2.IsCompleted)
-        {
-            Console.WriteLine("I can see beneath your lies. Turn back at once!");
-            return;
-        }
-        else if (quest1.IsCompleted && quest2.IsCompleted)
-        {   
-            string[] guardLines = new string[]
+
+        // if (!quest1.IsCompleted || !quest2.IsCompleted)
+        // {
+        //     Console.WriteLine("I can see beneath your lies. Turn back at once!");
+        //     return;
+        // }
+
+        string[] guardLines = new string[]
         {
             "I see the truth in your eyes.",
             "We shall play a number game. I’ll think of a number between 1 and 10.",
             "You have 3 tries to guess it.",
             "If you fail, you may try again. If you succeed, you shall pass!",
         };
-        
+
         PrintWithPause(guardLines);
 
-        Console.Clear();    // Clears the console screen. Useful!
+        Console.Clear(); // Clears the console screen. Useful!
 
         while (!PassedGuard)
         {
@@ -506,6 +518,7 @@ public class Game
                     Console.WriteLine("Invalid guess! Try again.");
                     continue;
                 }
+
                 if (guessedNum == num)
                 {
                     Console.WriteLine("Correct! You may now pass the gate");
@@ -519,26 +532,29 @@ public class Game
 
             if (!PassedGuard)
             {
-            Console.Clear();
-            Console.WriteLine("You failed to guess the number in 3 tries. You lack conviction!");
-            Thread.Sleep(sleepTime);
-            while (true)
-            {
-                Console.WriteLine("Do you wish to try again?");
+                Console.Clear();
+                Console.WriteLine("You failed to guess the number in 3 tries. You lack conviction!");
                 Thread.Sleep(sleepTime);
-                Console.WriteLine("Y/N");
-                string noOrYes = Console.ReadLine().ToUpper();
-                if (noOrYes != "Y" && noOrYes != "N")
+                while (true)
                 {
-                    Console.WriteLine("What was that?");
-                    continue;
+                    Console.WriteLine("Do you wish to try again?");
+                    Thread.Sleep(sleepTime);
+                    Console.WriteLine("Y/N");
+                    string noOrYes = Console.ReadLine().ToUpper();
+                    if (noOrYes != "Y" && noOrYes != "N")
+                    {
+                        Console.WriteLine("What was that?");
+                        continue;
+                    }
+
+                    if (noOrYes == "N")
+                    {
+                        return;
+                    }
+
+                    break;
                 }
-                if (noOrYes == "N")
-                {
-                    return;
-                }
-                break;
-            }     
+            }
         }
     }
-}}}
+}
