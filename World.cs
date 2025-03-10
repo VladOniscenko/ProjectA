@@ -40,9 +40,9 @@ public class World
     
     public static void PopulateWeapons()
     {
-        Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 5));
-        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Club", 10));
-        Weapons.Add(new Weapon(WEAPON_ID_GREATSWORD, "Greatsword", 15));
+        Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 1));
+        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Club", 3));
+        Weapons.Add(new Weapon(WEAPON_ID_GREATSWORD, "Greatsword", 5));
     }
 
     public static void PopulateMonsters()
