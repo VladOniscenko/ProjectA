@@ -348,7 +348,8 @@ public class Game
             MonsterTurn();
             if (!CurrentPlayer.IsAlive())
             {
-                Console.WriteLine("you died restart the game");
+                Console.WriteLine("You died! Press any key to return to main menu.");
+                Console.ReadKey();
                 Start();
             }
             
