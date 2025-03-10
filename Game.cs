@@ -61,6 +61,8 @@ public class Game
         CurrentWorld = new();
         CurrentPlayer = new("Player", World.WeaponByID(1));
 
+        World.Quests.ForEach(q => q.IsCompleted = false);
+
         // set player current location
         CurrentPlayer.MoveToLocation(World.LocationByID(World.LOCATION_ID_HOME));
 
@@ -327,25 +329,35 @@ public class Game
             {
                 case 'A':
                     currentMonster.damageMonster(CurrentPlayer.CurrentWeapon.Damage);
-                    Console.WriteLine($"You attack the {currentMonster.Name}");
+                    Console.WriteLine($"\nYou attack the {currentMonster.Name}");
                     break;
                 case 'H':
                     CurrentPlayer.HealPlayer(3);
-                    Console.WriteLine($"You healed yourself");
+                    Console.WriteLine($"\nYou healed yourself");
                     break;
                 case 'T':
-                    Console.WriteLine($"{currentMonster.Name}s cant talk...");
+                    Console.WriteLine($"\n{currentMonster.Name}s cant talk...");
                     break;
                 case 'F':
                     return;
             }
             
-            Thread.Sleep(1000);
+            Thread.Sleep(200);
             if (!currentMonster.IsAlive())
             {
-                round++;
                 Console.WriteLine($"U killed {currentMonster.Name}");
                 currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
+
+                if (round < quest.AmountOfMonstersToKill)
+                {
+                    Console.WriteLine($"You need to kill {quest.AmountOfMonstersToKill - round} more {currentMonster.Name}");
+                }
+                
+                Console.WriteLine();
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                
+                round++;
                 continue;
             }
 
@@ -356,6 +368,10 @@ public class Game
                 Console.ReadKey();
                 Start();
             }
+            
+            Console.WriteLine();
+            Console.WriteLine(CurrentPlayer.GetHealth());
+            Console.WriteLine($"{currentMonster.Name} has {currentMonster.CurrentHitPoints} HP left");
             
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
