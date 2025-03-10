@@ -13,7 +13,7 @@ namespace ProjectA
         private int SelectedIndex;
         private Dictionary<char, string> Options;
         private string Prompt;
-            
+
         public Menu(string prompt, Dictionary<char, string> options)
         {
             Prompt = prompt;
@@ -25,7 +25,7 @@ namespace ProjectA
         private void DisplayOptions()
         {
             WriteLine(Prompt);
-            
+
             //  Loop over options
             int i = 0;
             foreach (var option in Options)
@@ -49,20 +49,25 @@ namespace ProjectA
                 WriteLine($"{prefix} << {currentOption} >>");
                 i++; // Increment index to track selected option
             }
+
             ResetColor();
         }
 
-        public char Run()
+        public char Run(bool clear = true)
         {
             ConsoleKey keyPressed;
             do
             {
-               Clear();
-               DisplayOptions();
-               ConsoleKeyInfo keyInfo = ReadKey(true);
+                if (clear)
+                {
+                    Console.Clear();
+                }
 
-               keyPressed = keyInfo.Key;
-                 //     update selectedindex bades on arrowkeys
+                DisplayOptions();
+                ConsoleKeyInfo keyInfo = ReadKey(true);
+
+                keyPressed = keyInfo.Key;
+                //     update selectedindex bades on arrowkeys
                 if (keyPressed == ConsoleKey.UpArrow)
                 {
                     SelectedIndex--;
@@ -79,12 +84,10 @@ namespace ProjectA
                         SelectedIndex = 0;
                     }
                 }
-
             } while (keyPressed != ConsoleKey.Enter);
-            
+
             List<char> optionKeys = Options.Keys.ToList();
             return optionKeys[SelectedIndex];
         }
-
     }
 }
