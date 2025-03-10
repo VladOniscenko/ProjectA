@@ -25,17 +25,19 @@ public class Player
     public void DamagePlayer(int damageAmount){
         CurrentHitPoints = Math.Max(0, CurrentHitPoints - damageAmount);
         CheckPlayerHealth();
+        DisplayHealth();
     }
 
     public void HealPlayer(int healAmount){
         CurrentHitPoints = Math.Min(MaximumHitPoints, CurrentHitPoints + healAmount);
+
     }
 
     private void  CheckPlayerHealth(){
         if(CurrentHitPoints <= 0){
             Console.WriteLine("You have died... Press any key to go back to the main menu");
             Console.ReadKey(true);
-            // Start(); // return to menu
+            Start(); // return to menu
         }
     }
 
