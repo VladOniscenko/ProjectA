@@ -114,6 +114,6 @@ public class Location
             Console.WriteLine("    S");
         }
 
-        Console.Write("Where would you like to go? ");
+        Console.Write("\n\nWhere would you like to go? ");
     }
 }

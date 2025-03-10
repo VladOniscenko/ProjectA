@@ -381,11 +381,6 @@ public class Game
     {
         CheckIfPlayerWonTheGame();
 
-        if (CurrentPlayer.CurrentLocation.ID == World.LOCATION_ID_GUARD_POST)
-        {
-            Guard();
-        }
-
         Dictionary<char, string> actionOptionsList = new();
 
         if (CurrentPlayer.CurrentLocation.QuestAvailableHere != null &&
@@ -420,6 +415,11 @@ public class Game
                     CheckIfFightWon();
                     break;
             }
+        }
+        
+        if (CurrentPlayer.CurrentLocation.ID == World.LOCATION_ID_GUARD_POST)
+        {
+            Guard();
         }
     }
 
@@ -459,22 +459,21 @@ public class Game
     public void Guard()
     {
         Console.Clear();
+        Console.WriteLine($"You are at {CurrentPlayer.CurrentLocation.Name}");
+
+        
         // Set variables
         bool guardFinished = false;
         int sleepTime = 1000;
 
         Thread.Sleep(sleepTime);
         Console.WriteLine("You wish to pass the post? You must have proof of your grith.");
-        Thread.Sleep(sleepTime);
         Console.WriteLine("Only then, shall I grant you permission to continue forward.");
-        Thread.Sleep(sleepTime);
 
         string yesOrNo;
         while (true)
         {
-            Console.WriteLine("Have you completed both quests from the farmer's field and the alchemist's garden?");
-            Thread.Sleep(sleepTime);
-            Console.WriteLine("(Y/N)");
+            Console.WriteLine("Have you completed both quests from the farmer's field and the alchemist's garden (Y/n)?");
             yesOrNo = Console.ReadLine().ToUpper();
 
             if (yesOrNo != "Y" && yesOrNo != "N")
@@ -486,6 +485,7 @@ public class Game
             if (yesOrNo == "N")
             {
                 Console.WriteLine("Then turn back at once! You have no proof of your grit");
+                CurrentPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_TOWN_SQUARE);
                 return; // Exits method
             }
 
@@ -497,7 +497,10 @@ public class Game
 
         if (!quest1.IsCompleted || !quest2.IsCompleted)
         {
+            CurrentPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_TOWN_SQUARE);
             Console.WriteLine("I can see beneath your lies. Turn back at once!");
+            Console.WriteLine("\nPress any key to return");
+            Console.ReadKey(true);
             return;
         }
 
