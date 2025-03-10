@@ -9,6 +9,7 @@ public class Game
     protected Menu MainMenu;
     public bool IntroductionPlayed = false;
     public bool Playing;
+    public bool PassedGuard;
     
     public Game()
     {
@@ -41,7 +42,7 @@ public class Game
     private void StartGame()
     {
         Playing = true;
-        
+        PassedGuard = false;
         CurrentWorld = new();
         CurrentPlayer = new("Player", World.WeaponByID(1));
 
@@ -432,4 +433,112 @@ public class Game
         Console.WriteLine("\nPress any key to continue:");
         Console.ReadLine();
     }
-}
+
+    public void Guard()
+    {
+        Console.Clear();
+        // Set variables
+        bool guardFinished = false;
+        int sleepTime = 1000;
+        
+        Thread.Sleep(sleepTime);
+        Console.WriteLine("You wish to pass the post? You must have proof of your grith.");
+        Thread.Sleep(sleepTime);
+        Console.WriteLine("Only then, shall I grant you permission to continue forward.");
+        Thread.Sleep(sleepTime);
+        
+        string yesOrNo;
+        while (true)
+        {
+            Console.WriteLine("Have you completed both quests from the farmer's field and the alchemist's garden?");
+            Thread.Sleep(sleepTime);
+            Console.WriteLine("(Y/N)");
+            yesOrNo = Console.ReadLine().ToUpper();
+
+            if (yesOrNo != "Y" && yesOrNo != "N")
+            {
+                Console.WriteLine("What was that?");
+                continue;   // Continues the loop
+            }
+            else if (yesOrNo == "N")
+            {
+                Console.WriteLine("Then turn back at once! You have no proof of your grit");
+                return;     // Exits method
+            }
+            break;      // Exits loop
+        }
+
+        Quest quest1 = World.QuestByID(World.QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
+        Quest quest2 = World.QuestByID(World.QUEST_ID_CLEAR_FARMERS_FIELD);
+                
+        if (!quest1.IsCompleted || !quest2.IsCompleted)
+        {
+            Console.WriteLine("I can see beneath your lies. Turn back at once!");
+            return;
+        }
+        else if (quest1.IsCompleted && quest2.IsCompleted)
+        {   
+            string[] guardLines = new string[]
+        {
+            "I see the truth in your eyes.",
+            "We shall play a number game. I’ll think of a number between 1 and 10.",
+            "You have 3 tries to guess it.",
+            "If you fail, you may try again. If you succeed, you shall pass!",
+        };
+        
+        PrintWithPause(guardLines);
+
+        Console.Clear();    // Clears the console screen. Useful!
+
+        while (!PassedGuard)
+        {
+            // Generate random number between 0 and 11
+            Random randInt = new Random();
+            int num = randInt.Next(1, 11);
+            int currAttempts = 0;
+            int maxAttempts = 3;
+
+            while (maxAttempts > currAttempts)
+            {
+                Console.WriteLine("Guess the number between 1 and 10.");
+                if (!int.TryParse(Console.ReadLine(), out int guessedNum))
+                {
+                    Console.WriteLine("Invalid guess! Try again.");
+                    continue;
+                }
+                if (guessedNum == num)
+                {
+                    Console.WriteLine("Correct! You may now pass the gate");
+                    PassedGuard = true;
+                    break;
+                }
+
+                currAttempts++;
+                Console.WriteLine($"Incorrect. You have {3 - currAttempts} attempts left!");
+            }
+
+            if (!PassedGuard)
+            {
+            Console.Clear();
+            Console.WriteLine("You failed to guess the number in 3 tries. You lack conviction!");
+            Thread.Sleep(sleepTime);
+            while (true)
+            {
+                Console.WriteLine("Do you wish to try again?");
+                Thread.Sleep(sleepTime);
+                Console.WriteLine("Y/N");
+                string noOrYes = Console.ReadLine().ToUpper();
+                if (noOrYes != "Y" && noOrYes != "N")
+                {
+                    Console.WriteLine("What was that?");
+                    continue;
+                }
+                if (noOrYes == "N")
+                {
+                    return;
+                }
+                break;
+            }     
+        }
+    }
+}}}
