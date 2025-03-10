@@ -68,7 +68,9 @@ public class Game
             /*
                 Write the current possible options above (fight, quest, etc)
             */
-
+            
+            // display health
+            CurrentPlayer.DisplayHealth();
 
             // display the map of current location
             CurrentPlayer.DisplayMap();
