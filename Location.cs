@@ -109,6 +109,22 @@ public class Location
                 Console.WriteLine("    S");
             }
 
-            Console.Write("\n\nWhere would you like to go? ");
+            // Show the player's health at the bottom.
+            DisplayPlayerHealth();
+
+            Console.Write("Where would you like to go? ");
+        }
+
+        private void DisplayPlayerHealth()
+        {
+            // Check if the Instance variable of the player exists. 
+            if (Player.Instance is not null)
+            {
+                // A few empty lines...
+                Console.WriteLine("\n\n\n");
+
+                // Call function in player class to display it's health. 
+                Player.Instance.DisplayHealth();  
+            }
         }
 }
