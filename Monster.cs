@@ -13,5 +13,15 @@ public class Monster
         MaximumDamage = maximumDamage;
         CurrentHitPoints = currentHitPoints;
         MaximumHitPoints = maximumHitPoints;
-    }    
+    }
+
+    public void damageMonster(int damageAmount)
+    {
+        CurrentHitPoints = Math.Max(0, CurrentHitPoints - damageAmount);
+    }
+
+    public bool IsAlive()
+    {
+        return CurrentHitPoints > 0;
+    }
 }

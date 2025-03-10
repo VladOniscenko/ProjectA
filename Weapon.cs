@@ -30,14 +30,3 @@ public class Weapon
         Console.WriteLine($"{Name} has been upgraded! New damage: {Damage}");
     }
 }
-
-// Test (Doesn't work?)
-// class Program
-// {
-//     static void Main()
-//     {
-//         Weapon sword = new Weapon("Blades of Chaos", 50, 3.5);
-//         sword.ShowStats();
-//         sword.Attack();
-//     }
-// }

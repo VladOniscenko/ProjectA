@@ -96,4 +96,9 @@ public class Player
 
         CurrentLocation = newLocation;
     }
+
+    public bool IsAlive()
+    {
+        return CurrentHitPoints > 0;
+    }
 }
