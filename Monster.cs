@@ -19,4 +19,9 @@ public class Monster
     {
         CurrentHitPoints = Math.Max(0, CurrentHitPoints - damageAmount);
     }
+
+    public bool IsAlive()
+    {
+        return CurrentHitPoints > 0;
+    }
 }
