@@ -331,7 +331,6 @@ public class Game
                 case 'A':
                     currentMonster.damageMonster(CurrentPlayer.CurrentWeapon.Damage);
                     Console.WriteLine($"Monster {round}: You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
-                    round++;
                     break;
                 case 'H':
                     CurrentPlayer.HealPlayer(3);
@@ -347,6 +346,7 @@ public class Game
             Thread.Sleep(1000);
             if (!currentMonster.IsAlive())
             {
+                round++;
                 Console.WriteLine($"U killed {currentMonster.Name}");
                 continue;
             }
