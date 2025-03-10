@@ -28,7 +28,6 @@ public class Game
         switch (MainMenu.Run())
         {
             case 'P':
-                Guard();
                 StartGame();
                 break;
             case 'A':
@@ -374,6 +373,11 @@ public class Game
     public void CheckForActions()
     {
         CheckIfPlayerWonTheGame();
+
+        if (CurrentPlayer.CurrentLocation.ID == World.LOCATION_ID_GUARD_POST)
+        {
+            Guard();
+        }
 
         Dictionary<char, string> actionOptionsList = new();
 
