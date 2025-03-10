@@ -315,30 +315,36 @@ public class Game
         Quest quest = CurrentPlayer.CurrentLocation.FightAvailableHere;
         Monster currentMonster = CurrentPlayer.CurrentLocation.MonsterLivingHere;
         Menu battleMenu = new("What will be your next move?", BattleOptionList);
+        
+        Console.Clear();
+        Console.WriteLine($"U need to kill {quest.AmountOfMonstersToKill} {currentMonster.Name}'s");
+        Console.WriteLine();
 
-        for (int i = 1; i <= quest.AmountOfMonstersToKill; i++)
+        int round = 1;
+        while (round <= quest.AmountOfMonstersToKill)
         {
+            Console.WriteLine();
+            
             currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
-            switch(battleMenu.Run())
+            switch(battleMenu.Run(false))
             {
                 case 'A':
                     currentMonster.damageMonster(CurrentPlayer.CurrentWeapon.Damage);
-                    Console.WriteLine($"You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
-                    Thread.Sleep(1000);
+                    Console.WriteLine($"Monster {round}: You attack the monster his current health is:{currentMonster.CurrentHitPoints}/{currentMonster.MaximumHitPoints}");
+                    round++;
                     break;
                 case 'H':
                     CurrentPlayer.HealPlayer(3);
                     Console.WriteLine($"You healed yourself, your current health is:{CurrentPlayer.CurrentHitPoints}/{CurrentPlayer.MaximumHitPoints}");
-                    Thread.Sleep(1000);
                     break;
                 case 'T':
                     Console.WriteLine($"{currentMonster.Name}s cant talk...");
-                    Thread.Sleep(1000);
                     break;
                 case 'F':
                     return;
             }
-
+            
+            Thread.Sleep(1000);
             if (!currentMonster.IsAlive())
             {
                 Console.WriteLine($"U killed {currentMonster.Name}");
@@ -353,9 +359,10 @@ public class Game
                 Start();
             }
             
-            Console.Clear();
-            Console.WriteLine($"Your current quest progression: {i}/{quest.AmountOfMonstersToKill}");
+            Console.WriteLine($"Your current quest progression: {round}/{quest.AmountOfMonstersToKill}");
             Thread.Sleep(1000);
+            
+            Console.WriteLine();
         }
 
         quest.IsCompleted = true;
