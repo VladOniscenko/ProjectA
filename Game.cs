@@ -484,11 +484,11 @@ public class Game
         Quest quest1 = World.QuestByID(World.QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
         Quest quest2 = World.QuestByID(World.QUEST_ID_CLEAR_FARMERS_FIELD);
 
-        // if (!quest1.IsCompleted || !quest2.IsCompleted)
-        // {
-        //     Console.WriteLine("I can see beneath your lies. Turn back at once!");
-        //     return;
-        // }
+        if (!quest1.IsCompleted || !quest2.IsCompleted)
+        {
+            Console.WriteLine("I can see beneath your lies. Turn back at once!");
+            return;
+        }
 
         string[] guardLines = new string[]
         {
