@@ -274,7 +274,7 @@ public class Game
             if (quest.Reward != null)
             {
                 Console.WriteLine($"The {monster.Name} left behind a {quest.Reward.Name}...");
-                // string? accepted = Console.ReadLine()?.Trim().ToUpper();
+                
                 string? accepted;
                 do
                 {
@@ -285,12 +285,14 @@ public class Game
                         Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
                     }
                 }
-                while (accepted != "Y" && accepted != "N") ;
+                while (accepted != "Y" && accepted != "N");
+                
                 if (accepted == "Y")
                 {
                     CurrentPlayer.CurrentWeapon = quest.Reward;
                 }
             }
+            
             Console.WriteLine("After an intense battle, you feel a surge of newfound strength, breaking past your limits and ascending to new heights.\n");
             CurrentPlayer.MaximumHitPoints += 10;
             CurrentPlayer.CurrentHitPoints = CurrentPlayer.MaximumHitPoints;
