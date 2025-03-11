@@ -281,7 +281,9 @@ public class Game
                     CurrentPlayer.CurrentWeapon = quest.Reward;
                 }
             }
-
+            Console.WriteLine("After an intense battle, you feel a surge of newfound strength, breaking past your limits and ascending to new heights.\n");
+            CurrentPlayer.MaximumHitPoints += 10;
+            CurrentPlayer.CurrentHitPoints = CurrentPlayer.MaximumHitPoints;
             Console.WriteLine("Press any key to continue");
             Console.ReadKey(true);
         }
@@ -332,7 +334,7 @@ public class Game
                     Console.WriteLine($"\nYou attack the {currentMonster.Name}");
                     break;
                 case 'H':
-                    CurrentPlayer.HealPlayer(3);
+                    CurrentPlayer.HealPlayer(CurrentPlayer.MaximumHitPoints / 10 * 2 + 1);
                     Console.WriteLine($"\nYou healed yourself");
                     break;
                 case 'T':

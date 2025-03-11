@@ -48,8 +48,8 @@ public class World
     public static void PopulateMonsters()
     {
         Monster rat = new Monster(MONSTER_ID_RAT, "rat", 1, 3, 3);
-        Monster snake = new Monster(MONSTER_ID_SNAKE, "snake", 10, 7, 7);
-        Monster giantSpider = new Monster(MONSTER_ID_GIANT_SPIDER, "giant spider", 3, 10, 10);
+        Monster snake = new Monster(MONSTER_ID_SNAKE, "snake", 3, 7, 7);
+        Monster giantSpider = new Monster(MONSTER_ID_GIANT_SPIDER, "giant spider", 10, 10, 10);
         
         Monsters.Add(rat);
         Monsters.Add(snake);
