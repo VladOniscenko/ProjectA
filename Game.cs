@@ -268,6 +268,7 @@ public class Game
 
         if (quest.IsCompleted)
         {
+            Console.Clear();
             Console.WriteLine($"You defeated the {monster.Name}s!");
 
             if (quest.Reward != null)
