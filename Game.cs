@@ -274,8 +274,17 @@ public class Game
             if (quest.Reward != null)
             {
                 Console.WriteLine($"The {monster.Name} left behind a {quest.Reward.Name}...");
-                Console.WriteLine($"Will you equip the {quest.Reward.Name}? y/n");
-                string? accepted = Console.ReadLine()?.Trim().ToUpper();
+                // string? accepted = Console.ReadLine()?.Trim().ToUpper();
+                string? accepted;
+                do
+                {
+                    Console.WriteLine($"Will you equip the {quest.Reward.Name}? y/n");
+                    accepted = Console.ReadLine()?.Trim().ToUpper();
+                    if (accepted != "Y" && accepted != "N")
+                    {
+                        Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                    }
+                }
                 while (accepted != "Y" && accepted != "N") ;
                 if (accepted == "Y")
                 {
