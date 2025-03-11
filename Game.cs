@@ -321,12 +321,12 @@ public class Game
         currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
 
         Console.Clear();
-        Console.WriteLine($"U see {quest.AmountOfMonstersToKill} {currentMonster.Name}'s u need to kill them!");
+        Console.WriteLine($"You see the {quest.AmountOfMonstersToKill} {currentMonster.Name}s, it's time for battle!");
 
         int round = 1;
         while (round <= quest.AmountOfMonstersToKill)
         {
-            Menu battleMenu = new($"Monster {round}/{quest.AmountOfMonstersToKill}: {currentMonster.CurrentHitPoints} HP of {currentMonster.MaximumHitPoints}\n{CurrentPlayer.GetHealth()}\nWhat will be your next move?", BattleOptionList);
+            Menu battleMenu = new($"{currentMonster.Name} {round}/{quest.AmountOfMonstersToKill}: {currentMonster.CurrentHitPoints} HP of {currentMonster.MaximumHitPoints}\n{CurrentPlayer.GetHealth()}\nWhat will be your next move?", BattleOptionList);
             switch(battleMenu.Run())
             {
                 case 'A':
@@ -347,12 +347,12 @@ public class Game
             Thread.Sleep(200);
             if (!currentMonster.IsAlive())
             {
-                Console.WriteLine($"U killed {currentMonster.Name}");
+                Console.WriteLine($"you killed the {currentMonster.Name}!");
                 currentMonster.CurrentHitPoints = currentMonster.MaximumHitPoints;
 
                 if (round < quest.AmountOfMonstersToKill)
                 {
-                    Console.WriteLine($"You need to kill {quest.AmountOfMonstersToKill - round} more {currentMonster.Name}");
+                    Console.WriteLine($"You need to kill {quest.AmountOfMonstersToKill - round} more {currentMonster.Name}s");
                 }
                 
                 Console.WriteLine();
@@ -373,7 +373,7 @@ public class Game
             
             Console.WriteLine();
             Console.WriteLine(CurrentPlayer.GetHealth());
-            Console.WriteLine($"{currentMonster.Name} has {currentMonster.CurrentHitPoints} HP left");
+            Console.WriteLine($"the {currentMonster.Name} has {currentMonster.CurrentHitPoints} HP left");
             
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
@@ -386,7 +386,7 @@ public class Game
     }
     public void MonsterTurn()
     {
-        Console.WriteLine($"{CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} attacked you");
+        Console.WriteLine($"the {CurrentPlayer.CurrentLocation.MonsterLivingHere.Name} attacks you");
         CurrentPlayer.DamagePlayer(CurrentPlayer.CurrentLocation.MonsterLivingHere.MaximumDamage);
         Thread.Sleep(1000);
     }
