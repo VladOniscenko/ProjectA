@@ -30,6 +30,10 @@ public class Player
     public void HealPlayer(int healAmount){
         CurrentHitPoints = Math.Min(MaximumHitPoints, CurrentHitPoints + healAmount);
     }
+    
+    public void HealPlayer(){
+        HealPlayer(MaximumHitPoints / 10 * 2 + 1);
+    }
 
     private void  CheckPlayerHealth(){
         if(CurrentHitPoints <= 0){

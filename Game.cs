@@ -334,7 +334,7 @@ public class Game
                     Console.WriteLine($"\nYou attack the {currentMonster.Name}");
                     break;
                 case 'H':
-                    CurrentPlayer.HealPlayer(CurrentPlayer.MaximumHitPoints / 10 * 2 + 1);
+                    CurrentPlayer.HealPlayer();
                     Console.WriteLine($"\nYou healed yourself");
                     break;
                 case 'T':
