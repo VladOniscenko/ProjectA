@@ -292,7 +292,7 @@ public class Game
                     CurrentPlayer.CurrentWeapon = quest.Reward;
                 }
             }
-            
+
             Console.WriteLine("After an intense battle, you feel a surge of newfound strength, breaking past your limits and ascending to new heights.\n");
             CurrentPlayer.MaximumHitPoints += 10;
             CurrentPlayer.CurrentHitPoints = CurrentPlayer.MaximumHitPoints;
@@ -566,6 +566,11 @@ public class Game
 
     public void Guard()
     {
+        if (PassedGuard)
+        {
+            return;
+        }
+        
         Console.Clear();
         Console.WriteLine($"You are at {CurrentPlayer.CurrentLocation.Name}");
 
