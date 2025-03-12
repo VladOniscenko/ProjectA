@@ -575,30 +575,33 @@ public class Game
         Console.Clear();
         Console.WriteLine($"You are at {CurrentPlayer.CurrentLocation.Name}");
 
-        
-        // Set variables
-        bool guardFinished = false;
         int sleepTime = 1000;
 
         Thread.Sleep(sleepTime);
-        Console.WriteLine("You wish to pass the post? You must have proof of your grith.");
-        Console.WriteLine("Only then, shall I grant you permission to continue forward.");
+        Console.WriteLine("Halt, traveler! Hast thou completed both trials?");
+        Thread.Sleep(sleepTime);
+        Console.WriteLine("The farmer's toil in the fields and the alchemist's task in the garden?");
+        Thread.Sleep(sleepTime);
+        Console.WriteLine("Speak true, lest thou be denied passage!");
+        Thread.Sleep(sleepTime);
 
         string yesOrNo;
         while (true)
         {
-            Console.WriteLine("Have you completed both quests from the farmer's field and the alchemist's garden (Y/n)?");
+            Console.WriteLine("Y/N");
             yesOrNo = Console.ReadLine().ToUpper();
 
             if (yesOrNo != "Y" && yesOrNo != "N")
             {
-                Console.WriteLine("What was that?");
+                Console.WriteLine("What sorcery dost thou speak? Say it again!");
+                Thread.Sleep(sleepTime);
+                Console.WriteLine("Hast thou fulfilled the quests of the farmer’s toil in the fields and the alchemist’s garden?");
                 continue; // Continues the loop
             }
              
             if (yesOrNo == "N")
             {
-                Console.WriteLine("Then turn back at once! You have no proof of your grit");
+                Console.WriteLine("Then be gone at once! Thou hast no proof of thy mettle!");
                 CurrentPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_TOWN_SQUARE);
                 return; // Exits method
             }
@@ -612,18 +615,18 @@ public class Game
         if (!quest1.IsCompleted || !quest2.IsCompleted)
         {
             CurrentPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_TOWN_SQUARE);
-            Console.WriteLine("I can see beneath your lies. Turn back at once!");
+            Console.WriteLine("I see through thy falsehoods! Turn back at once!");
             Console.WriteLine("\nPress any key to return");
-            Console.ReadKey(true);
+            Console.ReadKey(true);      // Checks any keyboard inputs!
             return;
         }
 
         string[] guardLines = new string[]
         {
-            "I see the truth in your eyes.",
-            "We shall play a number game. I’ll think of a number between 1 and 10.",
-            "You have 3 tries to guess it.",
-            "If you fail, you may try again. If you succeed, you shall pass!",
+            "I see the truth in thine eyes.",
+            "We shall play a game of numbers. I shall think of one betwixt one and ten.",
+            "Thou hast but three chances to divine it.",
+            "Fail, and thou mayst try again. Succeed, and passage shall be thine!",
         };
 
         PrintWithPause(guardLines);
@@ -640,38 +643,39 @@ public class Game
 
             while (maxAttempts > currAttempts)
             {
-                Console.WriteLine("Guess the number between 1 and 10.");
+                Console.WriteLine("Guess the number 'twixt one and ten!");
                 if (!int.TryParse(Console.ReadLine(), out int guessedNum))
                 {
-                    Console.WriteLine("Invalid guess! Try again.");
+                    Console.WriteLine("An invalid guess! Try once more.");
                     continue;
                 }
 
                 if (guessedNum == num)
                 {
-                    Console.WriteLine("Correct! You may now pass the gate");
+                    Console.WriteLine("Correct! Thou mayst now pass the gate!");
+                    Thread.Sleep(sleepTime);
                     PassedGuard = true;
                     break;
                 }
 
                 currAttempts++;
-                Console.WriteLine($"Incorrect. You have {3 - currAttempts} attempts left!");
+                Console.WriteLine($"Incorrect! Thou hast {3 - currAttempts} attempts left! Choose wisely, traveler!");
             }
 
             if (!PassedGuard)
             {
                 Console.Clear();
-                Console.WriteLine("You failed to guess the number in 3 tries. You lack conviction!");
+                Console.WriteLine("Thou hast failed to guess the number in three tries. Thy conviction is lacking!");
                 Thread.Sleep(sleepTime);
                 while (true)
                 {
-                    Console.WriteLine("Do you wish to try again?");
+                    Console.WriteLine("Dost thou wish to try again?");
                     Thread.Sleep(sleepTime);
                     Console.WriteLine("Y/N");
                     string noOrYes = Console.ReadLine().ToUpper();
                     if (noOrYes != "Y" && noOrYes != "N")
                     {
-                        Console.WriteLine("What was that?");
+                        Console.WriteLine("What sorcery dost thou speak? Say it again!");
                         continue;
                     }
 
