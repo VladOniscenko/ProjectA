@@ -49,7 +49,7 @@ public class Player
 
     public string GetHealth()
     {
-        return $"{Name}'s health: {CurrentHitPoints} HP of {MaximumHitPoints}";
+        return $"\n{Name}'s health: {CurrentHitPoints} HP of {MaximumHitPoints}";
     }
 
     public void MoveToLocation(Location? location){
